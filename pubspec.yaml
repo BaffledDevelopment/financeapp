@@ -30,6 +30,7 @@ dependencies:
   flutter:
     sdk: flutter
   shared_preferences: any
+  font_awesome_flutter: any
 
 
 

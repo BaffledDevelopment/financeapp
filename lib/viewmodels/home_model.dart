@@ -16,7 +16,7 @@ class HomeModel extends BaseModel {
 
 
   List<Transaction> transactions = List<Transaction>.empty();
-  bool isCollabsed = false;
+  bool isCollapsed = false;
   late String appBarTitle;
   late String selectedYear;
   late int selectedMonthIndex;
@@ -45,7 +45,7 @@ class HomeModel extends BaseModel {
   }
 
   titleClicked() {
-    isCollabsed = !isCollabsed;
+    isCollapsed = !isCollapsed;
     notifyListeners();
   }
 
@@ -66,7 +66,7 @@ class HomeModel extends BaseModel {
     setState(ViewState.Busy);
     notifyListeners();
 
-    transactions = await _dataBaseService.getAllTransactions();
+    transactions = await _dataBaseService.getAllTransactions(appBarTitle);
 
     setState(ViewState.Idle);
     notifyListeners();

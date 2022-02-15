@@ -19,12 +19,12 @@ class SummaryWidget extends StatelessWidget {
             children: <Widget>[
               Column(
                 children: <Widget>[
-                  Text('Income', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
+                  const Text('Income', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
 
-                  Text(income.toString(), style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600))
+                  Text(income.toString(), style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w600))
                 ],
               ),
-              Text(
+              const Text(
                 '|',
                 style: TextStyle(
                     fontSize: 40,
@@ -33,15 +33,15 @@ class SummaryWidget extends StatelessWidget {
               ),
               Column(
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Expense',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
                   ),
 
-                  Text(expense.toString(), style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600))
+                  Text(expense.toString(), style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w600))
                 ],
               ),
-              Text(
+              const Text(
                 '|',
                 style: TextStyle(
                     fontSize: 40,
@@ -50,13 +50,13 @@ class SummaryWidget extends StatelessWidget {
               ),
               Column(
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Balance',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
                   ),
 
                   Text((income - expense).toString(),
-                      style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600))
+                      style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w600))
                 ],
               ),
             ],

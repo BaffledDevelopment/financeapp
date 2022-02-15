@@ -3,20 +3,23 @@ import 'package:finances/services/auth_service.dart';
 import 'package:finances/services/database_service.dart';
 import 'package:finances/viewmodels/base_model.dart';
 
+
+
+import 'package:finances/enum_viewstate.dart';
 import 'package:finances/locator.dart';
+import 'package:flutter/material.dart';
 
 class HomeModel extends BaseModel {
-  final AuthenticationService _authenticationService =
-  locator<AuthenticationService>();
-
   final DataBaseService _dataBaseService =
-    locator<DataBaseService>();
+  locator<DataBaseService>();
 
-  late List<Transaction> transactions;
-  bool isCollapsed = false;
-  late String appBarTitle; // name of seklected month
+
+
+  List<Transaction> transactions = List<Transaction>.empty();
+  bool isCollabsed = false;
+  late String appBarTitle;
   late String selectedYear;
-  late int selectedMonthIndex; // list below
+  late int selectedMonthIndex;
 
   List months = [
     'Jan',
@@ -42,8 +45,30 @@ class HomeModel extends BaseModel {
   }
 
   titleClicked() {
-    isCollapsed = !isCollapsed;
+    isCollabsed = !isCollabsed;
     notifyListeners();
   }
 
+  getColor(month) {
+    int monthIndex = months.indexOf(month);
+    // color the selected month with
+    if (monthIndex == selectedMonthIndex) {
+      return Colors.orange;
+    } else {
+      return Colors.black;
+    }
+  }
+
+  init() async {
+    selectedMonthIndex = DateTime.now().month - 1;
+    appBarTitle = months[DateTime.now().month - 1];
+
+    setState(ViewState.Busy);
+    notifyListeners();
+
+    transactions = await _dataBaseService.getAllTransactions();
+
+    setState(ViewState.Idle);
+    notifyListeners();
+  }
 }

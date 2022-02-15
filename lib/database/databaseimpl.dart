@@ -11,12 +11,33 @@ class Transactions extends Table {
   IntColumn get amount => integer()();
 }
 
-@UseMoor(tables: [Transactions])
+@UseMoor(tables: [Transactions], daos: [TransactionDao])
 class AppDatabase extends _$AppDatabase {
   AppDatabase()
       : super(FlutterQueryExecutor.inDatabaseFolder(
       path: "db.sqlite", logStatements: true));
+
   int get schemaVersion => 1;
+}
+
+@UseDao(
+  tables: [Transactions],
+  queries: {
+    // this method will be generated
+    'getTransactionForMonth': 'SELECT * FROM transactions WHERE month = :month',
+    'sumTheMoneyForMonth':
+    'SELECT SUM(amount) FROM transactions WHERE month = :month AND type = :type',
+    'getAllTransactionsForType':
+    'SELECT * FROM transactions WHERE month = :month AND type = :type'
+  },
+)
+
+class TransactionDao extends DatabaseAccessor<AppDatabase>
+    with _$TransactionDaoMixin {
+  final AppDatabase db;
+
+  // Called by the AppDatabase class
+  TransactionDao(this.db) : super(db);
 
   Future<List<Transaction>> getAllTransactions() => select(transactions).get();
 

@@ -368,8 +368,51 @@ class $TransactionsTable extends Transactions
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   late final $TransactionsTable transactions = $TransactionsTable(this);
+  late final TransactionDao transactionDao =
+      TransactionDao(this as AppDatabase);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [transactions];
+}
+
+// **************************************************************************
+// DaoGenerator
+// **************************************************************************
+
+mixin _$TransactionDaoMixin on DatabaseAccessor<AppDatabase> {
+  $TransactionsTable get transactions => attachedDatabase.transactions;
+  Selectable<Transaction> getTransactionForMonth(String month) {
+    return customSelect('SELECT * FROM transactions WHERE month = :month',
+        variables: [
+          Variable<String>(month)
+        ],
+        readsFrom: {
+          transactions,
+        }).map(transactions.mapFromRow);
+  }
+
+  Selectable<int> sumTheMoneyForMonth(String month, String type) {
+    return customSelect(
+        'SELECT SUM(amount) FROM transactions WHERE month = :month AND type = :type',
+        variables: [
+          Variable<String>(month),
+          Variable<String>(type)
+        ],
+        readsFrom: {
+          transactions,
+        }).map((QueryRow row) => row.read<int>('SUM(amount)'));
+  }
+
+  Selectable<Transaction> getAllTransactionsForType(String month, String type) {
+    return customSelect(
+        'SELECT * FROM transactions WHERE month = :month AND type = :type',
+        variables: [
+          Variable<String>(month),
+          Variable<String>(type)
+        ],
+        readsFrom: {
+          transactions,
+        }).map(transactions.mapFromRow);
+  }
 }

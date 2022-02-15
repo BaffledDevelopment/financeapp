@@ -1,3 +1,4 @@
+import 'package:finances/services/database_service.dart';
 import 'package:finances/services/icon_service.dart';
 import 'package:finances/services/sharedpreferences_service.dart';
 import 'package:finances/viewmodels/home_model.dart';
@@ -14,6 +15,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => CategoryIconService());
   locator.registerLazySingleton(() => SharedPrefrencesService());
   locator.registerLazySingleton(() => AuthenticationService());
+  locator.registerLazySingleton(() => DataBaseService());
 
   //VIEWMODELS
   locator.registerFactory(() => HomeModel());

@@ -18,7 +18,7 @@ class NoTransactionsWidget extends StatelessWidget {
         ),
         Container(
         width: 30.0),
-        Text(
+        const Text(
           'No transactions\nTap + to add one.',
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.grey, fontSize: 18),

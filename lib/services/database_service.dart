@@ -38,16 +38,14 @@ class DataBaseService {
 
     int sumOfExpense = 0;
 
-    if (list == null && list.length == 0) {
+    if (list.isEmpty) {
       return 0;
     }
 
-    list.forEach((element) {
-      if (element == null) {
-        return;
-      }
+    for (var element in list) {
+
       sumOfExpense += element;
-    });
+    }
 
     return sumOfExpense;
   }
@@ -59,16 +57,14 @@ class DataBaseService {
 
     int sumOfIncome = 0;
 
-    if (list == null && list.length == 0) {
+    if (list.isEmpty) {
       return 0;
     }
 
-    list.forEach((element) {
-      if (element == null) {
-        return;
-      }
+    for (var element in list) {
+
       sumOfIncome += element;
-    });
+    }
 
     return sumOfIncome;
   }

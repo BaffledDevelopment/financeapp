@@ -30,9 +30,17 @@ class AppDrawer extends StatelessWidget {
               Navigator.of(context).pushNamed("chart");
             },
           ),
+
           const Divider(
             thickness: 1,
-          )
+          ),
+          ListTile(
+            title: const Text('Spline Chart'),
+            leading: const Icon(Icons.pie_chart),
+            onTap: () {
+              Navigator.of(context).pushNamed("spline_chart");
+            },
+          ),
         ],
       ),
     );

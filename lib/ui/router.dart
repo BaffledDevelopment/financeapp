@@ -1,6 +1,5 @@
 import 'package:finances/ui/views/home_view.dart';
 import 'package:finances/ui/views/new_transaction_view.dart';
-import 'package:finances/viewmodels/new_transaction_model.dart';
 import 'package:flutter/material.dart';
 
 const String initialRoute = "login";
@@ -14,6 +13,8 @@ class Router {
         return MaterialPageRoute(builder: (_) => HomeView());
       case 'new_transaction':
         return MaterialPageRoute(builder: (_) => NewTransactionView());
+      case 'create_transaction':
+        return MaterialPageRoute(builder: (_) => CreateNewTransactionView());
 
       default:
         return MaterialPageRoute(

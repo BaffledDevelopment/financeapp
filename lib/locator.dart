@@ -1,6 +1,7 @@
 import 'package:finances/services/database_service.dart';
 import 'package:finances/services/icon_service.dart';
 import 'package:finances/services/sharedpreferences_service.dart';
+import 'package:finances/viewmodels/create_new_transaction_model.dart';
 import 'package:finances/viewmodels/home_model.dart';
 import 'package:finances/services/auth_service.dart';
 import 'package:finances/viewmodels/new_transaction_model.dart';
@@ -21,5 +22,6 @@ void setupLocator() {
   //VIEWMODELS
   locator.registerFactory(() => HomeModel());
   locator.registerFactory(() => NewTransactionModel());
+  locator.registerFactory(() => CreateNewTransactionModel());
 
 }

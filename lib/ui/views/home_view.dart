@@ -23,7 +23,7 @@ class HomeView extends StatelessWidget {
       builder: (context, model, child) => Scaffold(
         appBar: buildAppBar(model!.appBarTitle, model),
         drawer: AppDrawer(context!),
-        floatingActionButton: ApplicationFloActBut(), // push to new transaction
+        floatingActionButton: ApplicationFloActBut(model.closeMonthPicker), // push to new transaction
         body: model.state == ViewState.Busy
             ? Center(child: CircularProgressIndicator())
             : Stack(

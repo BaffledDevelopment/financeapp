@@ -36,16 +36,28 @@ class HomeModel extends BaseModel {
     'Dec'
   ];
 
-  monthClicked(String clickedMonth) {
+  int expenseSum = 0;
+  int incomeSum = 0;
+
+  monthClicked(String clickedMonth) async {
     selectedMonthIndex = months.indexOf(clickedMonth);
 
     appBarTitle = clickedMonth;
+
+    expenseSum = await _dataBaseService.getExpenseSum(appBarTitle);
+    incomeSum = await _dataBaseService.getIncomeSum(appBarTitle);
 
     titleClicked();
   }
 
   titleClicked() {
     isCollapsed = !isCollapsed;
+    notifyListeners();
+
+  }
+
+  void closeMonthPicker() {
+    isCollapsed = false;
     notifyListeners();
   }
 
@@ -63,8 +75,13 @@ class HomeModel extends BaseModel {
     selectedMonthIndex = DateTime.now().month - 1;
     appBarTitle = months[DateTime.now().month - 1];
 
+    print("Expense : $expenseSum");
+    print("Income : $incomeSum");
+
     setState(ViewState.Busy);
     notifyListeners();
+
+
 
     transactions = await _dataBaseService.getAllTransactions(appBarTitle);
 

@@ -78,7 +78,13 @@ class CreateNewTransactionModel extends BaseModel {
   addTransaction(context) async {
     String amount = amountController.text;
 
+    String memo = memoController.text;
 
+    if (memo.isEmpty || amount.isEmpty) {
+      Fluttertoast.showToast(msg: "Please fill all the fields!",
+          toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.BOTTOM);
+      return;
+    }
 
     Transaction newTransaction = Transaction(
         type: type,
@@ -89,6 +95,11 @@ class CreateNewTransactionModel extends BaseModel {
         categoryindex: categoryIndex);
     // insert it!
     await _databaseService.insertTransaction(newTransaction);
+
+
+
+    Fluttertoast.showToast(msg: "Added successfully!",
+        toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
 
 
     // return to the home

@@ -3,63 +3,77 @@ import 'package:finances/models/category.dart';
 import 'package:finances/viewmodels/create_new_transaction_model.dart';
 import 'package:finances/ui/views/base_view.dart';
 
-class CreateNewTransactionView extends StatefulWidget {
-
+class CreateNewTransactionView extends StatelessWidget {
   final Category category;
   final int selectedCategory;
-
   CreateNewTransactionView(this.category, this.selectedCategory);
-
-  @override
-  _CreateNewTransactionViewState createState() =>
-      _CreateNewTransactionViewState();
-
-
-}
-
-class _CreateNewTransactionViewState extends State<CreateNewTransactionView>{
-  String _value = '';
-
-  Future _selectDate() async {
-    DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: new DateTime.now(),
-        firstDate: DateTime(2020),
-        lastDate: DateTime.now());
-    if (picked != null) setState(() => _value = picked.toString());
-
-    print(picked?.day);
-    print(picked?.month);
-  }
-
   @override
   Widget build(BuildContext context) {
-    TextEditingController memoController = TextEditingController();
-    TextEditingController amountController = TextEditingController();
-
     return BaseView<CreateNewTransactionModel>(
+      onModelReady: (model) => model.init(selectedCategory, category.index),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
-          title:
-          widget.selectedCategory == 1 ? Text('Income') : Text('Expense'),
+          title: selectedCategory == 1 ? Text('Income') : Text('Expense'),
         ),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
+            child: ListView(
               children: <Widget>[
-                buildTextField(memoController, 'Note:',
-                    "Enter a note for your transaction", Icons.edit, false),
-                Container(height: 20.0),
+                ListTile(
+                  title: Text(category.name),
+                  leading: CircleAvatar(
+                      child: Icon(
+                        category.icon,
+                        size: 20,
+                      )),
+                ),
+
+                buildTextField(model!.memoController, 'Memo:',
+                    "Enter a memo for your transcation", Icons.edit, false),
+
                 buildTextField(
-                    amountController,
+                    model.amountController,
                     'Amount:',
-                    "Enter a the amount for the transaction",
+                    "Enter a the amount for the transcation",
                     Icons.attach_money,
                     true),
-                RaisedButton(onPressed: () async {
-                  await _selectDate();
-                })
+
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'SELECT DATE:',
+                    style: TextStyle(fontStyle: FontStyle.italic, fontSize: 16),
+                  ),
+                ),
+                const Divider(
+                  thickness: 2,
+                ),
+                SizedBox(
+                  width: 20,
+                  height: 50,
+                  child: RaisedButton(
+                    child: Text(model.getSelectedDate()),
+                    onPressed: () async {
+                      await model.selectDate(context);
+                    },
+                  ),
+                ),
+
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: RaisedButton(
+                    child: const Text(
+                      'ADD',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    color: const Color.fromARGB(255, 255, 241, 159),
+                    textColor: Colors.black,
+                    onPressed: () async {
+                      await model.addTransaction(context);
+                    },
+                  ),
+                )
               ],
             ),
           ),
@@ -76,7 +90,7 @@ class _CreateNewTransactionViewState extends State<CreateNewTransactionView>{
       keyboardType: isNumeric ? TextInputType.number : TextInputType.text,
       controller: controller,
       decoration: InputDecoration(
-        border: const OutlineInputBorder(),
+        border: OutlineInputBorder(),
         icon: Icon(
           icon,
           color: Colors.black,
@@ -86,17 +100,16 @@ class _CreateNewTransactionViewState extends State<CreateNewTransactionView>{
           onTap: () {
             controller.clear();
           },
-          child: const Icon(
+          child: Icon(
             Icons.clear,
             color: Colors.black,
           ),
         ),
-        labelStyle: const TextStyle(
-          color: Color(0xffff000000),
+        labelStyle: TextStyle(
+          color: Color(0xFFFF000000),
         ),
         helperText: helperText,
       ),
     );
   }
-
 }

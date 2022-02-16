@@ -7,7 +7,7 @@ class Transactions extends Table {
   TextColumn get month => text()();
   // TextColumn get assetpath => text()(); // asset path / photo
   TextColumn get memo => text()(); // asset path / photo
-  // IntColumn get id => integer().autoIncrement()();
+  IntColumn get id => integer().autoIncrement()();
   IntColumn get amount => integer()();
   IntColumn get categoryindex => integer()();
 }
@@ -18,6 +18,7 @@ class AppDatabase extends _$AppDatabase {
       : super(FlutterQueryExecutor.inDatabaseFolder(
       path: "db.sqlite", logStatements: true));
 
+  @override
   int get schemaVersion => 1;
 }
 

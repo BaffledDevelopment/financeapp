@@ -26,7 +26,10 @@ class NewTransactionView extends StatelessWidget {
                 .map((e) => Card(
                 elevation: 4,
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context!).pushNamed("create_transaction",
+                        arguments: [e, model.selectedItem]);
+                  },
                   child: Container(
                     padding: EdgeInsets.all(4),
                     child: Column(

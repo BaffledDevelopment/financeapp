@@ -6,14 +6,16 @@ import 'package:finances/ui/views/base_view.dart';
 class CreateNewTransactionView extends StatelessWidget {
   final Category category;
   final int selectedCategory;
+
   CreateNewTransactionView(this.category, this.selectedCategory);
+
   @override
   Widget build(BuildContext context) {
     return BaseView<CreateNewTransactionModel>(
       onModelReady: (model) => model.init(selectedCategory, category.index),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
-          title: selectedCategory == 1 ? Text('Income') : Text('Expense'),
+          title: selectedCategory == 1 ? const Text('Income') : const Text('Expense'),
         ),
         body: SafeArea(
           child: Padding(
@@ -101,7 +103,7 @@ class CreateNewTransactionView extends StatelessWidget {
       keyboardType: isNumeric ? TextInputType.number : TextInputType.text,
       controller: controller,
       decoration: InputDecoration(
-        border: OutlineInputBorder(),
+        border: const OutlineInputBorder(),
         icon: Icon(
           icon,
           color: Colors.black,
@@ -111,12 +113,12 @@ class CreateNewTransactionView extends StatelessWidget {
           onTap: () {
             controller.clear();
           },
-          child: Icon(
+          child: const Icon(
             Icons.clear,
             color: Colors.black,
           ),
         ),
-        labelStyle: TextStyle(
+        labelStyle: const TextStyle(
           color: Color(0xFFFF000000),
         ),
         helperText: helperText,

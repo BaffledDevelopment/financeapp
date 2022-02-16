@@ -5,6 +5,7 @@ import 'package:finances/ui/widgets/home_view_widgets/app_bar.dart';
 import 'package:finances/ui/widgets/home_view_widgets/monthYearInterface.dart';
 import 'package:finances/ui/widgets/home_view_widgets/no_transactions_widget.dart';
 import 'package:finances/ui/widgets/home_view_widgets/summary.dart';
+import 'package:finances/ui/widgets/home_view_widgets/transactions_listwiew_widget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:finances/viewmodels/home_model.dart';
@@ -25,15 +26,15 @@ class HomeView extends StatelessWidget {
         drawer: AppDrawer(context!),
         floatingActionButton: ApplicationFloActBut(model.closeMonthPicker), // push to new transaction
         body: model.state == ViewState.Busy
-            ? Center(child: CircularProgressIndicator())
+            ? const Center(child: CircularProgressIndicator())
             : Stack(
           children: <Widget>[
             Column(
               children: <Widget>[
                 SummaryWidget(
-                    income: 5000, 
-                    expense: 300),
-                buildList(model.transactions)
+                  income: model.incomeSum,
+                  expense: model.expenseSum),
+                buildList(model.transactions, model)
               ],
             ),
             model.isCollapsed
@@ -46,8 +47,9 @@ class HomeView extends StatelessWidget {
   }
 
   buildOverlayPicker(showOrHide, HomeModel model, BuildContext context) {
-    return PickMonthAndYearOverlay(
-        model: model, showOrHide: showOrHide, context: context);
+    // return PickMonthAndYearOverlay();
+    // return PickMonthAndYearOverlay(
+    //     model: model, showOrHide: showOrHide, context: context);
   }
 
   buildAppBar(String title, HomeModel model) {
@@ -59,10 +61,9 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  buildList(List<Transaction> transactions) {
+  buildList(List<Transaction> transactions, HomeModel model) {
     return transactions.isEmpty
         ? const NoTransactionsWidget()
-        : Container();
-    
+        : TransactionsListView(transactions, model);
   }
 }

@@ -1,6 +1,7 @@
 import 'package:finances/database/databaseimpl.dart';
 import 'package:finances/services/auth_service.dart';
 import 'package:finances/services/database_service.dart';
+import 'package:finances/services/icon_service.dart';
 import 'package:finances/viewmodels/base_model.dart';
 
 
@@ -12,6 +13,9 @@ import 'package:flutter/material.dart';
 class HomeModel extends BaseModel {
   final DataBaseService _dataBaseService =
   locator<DataBaseService>();
+
+  final CategoryIconService _categoryIconService =
+  locator<CategoryIconService>();
 
 
 
@@ -81,11 +85,27 @@ class HomeModel extends BaseModel {
     setState(ViewState.Busy);
     notifyListeners();
 
-
-
     transactions = await _dataBaseService.getAllTransactions(appBarTitle);
 
     setState(ViewState.Idle);
     notifyListeners();
+  }
+
+  Icon getIconForCategory(int index, String type) {
+    if (type == 'income') {
+      final categoryIcon = _categoryIconService.incomeList.elementAt(index);
+
+      return Icon(
+        categoryIcon.icon,
+        color: categoryIcon.color,
+      );
+    } else {
+      final categoryIcon = _categoryIconService.expenseList.elementAt(index);
+
+      return Icon(
+        categoryIcon.icon,
+        color: categoryIcon.color,
+      );
+    }
   }
 }

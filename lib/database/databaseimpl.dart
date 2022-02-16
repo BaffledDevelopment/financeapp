@@ -5,9 +5,9 @@ class Transactions extends Table {
   TextColumn get type => text()(); //expense /income
   TextColumn get day => text()();
   TextColumn get month => text()();
-  TextColumn get assetpath => text()(); // asset path / photo
+  // TextColumn get assetpath => text()(); // asset path / photo
   TextColumn get memo => text()(); // asset path / photo
-  IntColumn get id => integer().autoIncrement()();
+  // IntColumn get id => integer().autoIncrement()();
   IntColumn get amount => integer()();
   IntColumn get categoryindex => integer()();
 }

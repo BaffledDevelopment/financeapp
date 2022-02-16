@@ -32,7 +32,7 @@ class DetailsView extends StatelessWidget {
                   InkWell(
                     child: const Icon(Icons.delete),
                     onTap: () {
-                      //todo delete dialog with onAlertPopUp or che tam bilo?
+                      showDeleteDialog(context!, model!);
                     },
                   ),
                 ],
@@ -67,4 +67,35 @@ class DetailsView extends StatelessWidget {
         ));
   }
 
+  showDeleteDialog(BuildContext context, DetailsModel model) async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Delete"),
+            content:
+            const Text("Are you sure do you want to delete this transaction"),
+            actions: <Widget>[
+              TextButton(
+                child: const Text(
+                  "Delete",
+                ),
+                onPressed: () async {
+                  await model.deleteTransacation(transaction);
+                  // hide dialog
+                  Navigator.of(context).pop();
+                  // exit detailsscreen
+                  Navigator.of(context).pop(true);
+                },
+              ),
+              TextButton(
+                child: const Text("Cancel"),
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+              )
+            ],
+          );
+        });
+  }
 }

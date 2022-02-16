@@ -19,7 +19,9 @@ class CreateNewTransactionView extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: ListView(
+
               children: <Widget>[
+
                 ListTile(
                   title: Text(category.name),
                   leading: CircleAvatar(
@@ -28,16 +30,23 @@ class CreateNewTransactionView extends StatelessWidget {
                         size: 20,
                       )),
                 ),
+                Container(
+                    height: 30.0),
 
-                buildTextField(model!.memoController, 'Memo:',
-                    "Enter a memo for your transcation", Icons.edit, false),
+
+                buildTextField(model!.memoController, 'Note:',
+                    "Enter a note for your transaction", Icons.edit, false),
+                Container(
+                    height: 20.0),
 
                 buildTextField(
                     model.amountController,
                     'Amount:',
-                    "Enter a the amount for the transcation",
+                    "Enter a the amount for the transaction",
                     Icons.attach_money,
                     true),
+                Container(
+                    height: 20.0),
 
                 const Align(
                   alignment: Alignment.centerLeft,
@@ -59,6 +68,8 @@ class CreateNewTransactionView extends StatelessWidget {
                     },
                   ),
                 ),
+                Container(
+                    height: 30.0),
 
                 Align(
                   alignment: Alignment.centerLeft,

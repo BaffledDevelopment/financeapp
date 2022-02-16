@@ -29,7 +29,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  shared_preferences: any
+
   font_awesome_flutter: any
   provider: any
   get_it: any
@@ -38,6 +38,11 @@ dependencies:
   toast: any
   fluttertoast: ^8.0.7
   flutter_portal: ^0.4.0
+  syncfusion_flutter_charts: any
+  chips_choice_null_safety: any
+#  chips_choice: any
+  pie_chart: any
+
 
 
 

@@ -1,4 +1,5 @@
 import 'package:finances/database/databaseimpl.dart';
+import 'package:finances/models/expenses_chart_data.dart';
 
 class DataBaseService {
 
@@ -67,6 +68,56 @@ class DataBaseService {
     }
 
     return sumOfIncome;
+  }
+
+  List<ExpensesChartData> getListOfExpenseSum() {
+    List months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
+    ];
+
+    List<ExpensesChartData> listOfData = [];
+
+    months.forEach((monthElement) async {
+      List<int> list = await _database.transactionDao
+          .sumTheMoneyForMonth(monthElement, "expense")
+          .get();
+
+      if (list != null && list.length != 0) {
+
+        list.forEach((element) {
+          print(element);
+
+          if (element == null) {
+            return;
+          }
+
+          listOfData.add(new ExpensesChartData(monthElement, element.toDouble()));
+        }
+        );
+
+      }
+
+      else {
+        listOfData.add(new ExpensesChartData(monthElement, 0));
+      }
+    });
+
+    listOfData.forEach((element) {
+      print("PRINTING DATASET CONTENTS");
+      print(element.toString());
+    });
+    return listOfData;
   }
 
 }

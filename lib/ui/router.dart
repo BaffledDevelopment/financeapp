@@ -4,6 +4,8 @@ import 'package:finances/ui/views/create_new_transaction_view.dart';
 import 'package:finances/ui/views/details_view.dart';
 import 'package:finances/ui/views/home_view.dart';
 import 'package:finances/ui/views/new_transaction_view.dart';
+import 'package:finances/ui/views/piechart_view.dart';
+import 'package:finances/ui/views/spline_chart_view.dart';
 import 'package:flutter/material.dart';
 
 const String initialRoute = "login";
@@ -19,6 +21,10 @@ class Router {
         return MaterialPageRoute(builder: (_) => AuthView());
       case 'new_transaction':
         return MaterialPageRoute(builder: (_) => NewTransactionView());
+      case 'chart':
+        return MaterialPageRoute(builder: (_) => PieChartView());
+      case 'spline_chart':
+        return MaterialPageRoute(builder: (_) => SplineChartView());
       case 'home':
         return MaterialPageRoute(builder: (_) => HomeView());
       case 'details':

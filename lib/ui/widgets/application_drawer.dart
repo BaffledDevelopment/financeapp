@@ -14,7 +14,7 @@ class AppDrawer extends StatelessWidget {
         children: <Widget>[
           DrawerHeader(
             child: Image.asset(
-              'assets/icons/wallet.png',
+              'assets/wallet.png',
               width: 100,
               height: 100,
               alignment: Alignment.centerLeft,

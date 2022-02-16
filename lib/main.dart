@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' hide Router;
 import 'package:finances/ui/router.dart';
 import 'package:finances/locator.dart';
 import 'package:flutter_portal/flutter_portal.dart';
+import '';
 
 void main() {
   setupLocator();
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primaryColor: const Color.fromARGB(255, 255, 241, 159),
           ),
-          initialRoute: '/',
+          initialRoute: 'auth',
           onGenerateRoute: Router.generateRoute,
         )
         );

@@ -1,4 +1,5 @@
 import 'package:finances/database/databaseimpl.dart';
+import 'package:finances/ui/views/auth_view.dart';
 import 'package:finances/ui/views/create_new_transaction_view.dart';
 import 'package:finances/ui/views/details_view.dart';
 import 'package:finances/ui/views/home_view.dart';
@@ -14,6 +15,8 @@ class Router {
       // need routes for dashboard, pie chart, stats, data screen, some more?
       case '/':
         return MaterialPageRoute(builder: (_) => HomeView());
+      case 'auth':
+        return MaterialPageRoute(builder: (_) => AuthView());
       case 'new_transaction':
         return MaterialPageRoute(builder: (_) => NewTransactionView());
       case 'home':

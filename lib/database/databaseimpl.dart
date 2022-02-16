@@ -9,6 +9,7 @@ class Transactions extends Table {
   TextColumn get memo => text()(); // asset path / photo
   IntColumn get id => integer().autoIncrement()();
   IntColumn get amount => integer()();
+  IntColumn get categoryindex => integer()();
 }
 
 @UseMoor(tables: [Transactions], daos: [TransactionDao])

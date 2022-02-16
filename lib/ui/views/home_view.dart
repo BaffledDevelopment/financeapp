@@ -67,3 +67,4 @@ class HomeView extends StatelessWidget {
         : TransactionsListView(transactions, model);
   }
 }
+

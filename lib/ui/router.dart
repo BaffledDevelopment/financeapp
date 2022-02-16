@@ -1,4 +1,6 @@
+import 'package:finances/database/databaseimpl.dart';
 import 'package:finances/ui/views/create_new_transaction_view.dart';
+import 'package:finances/ui/views/details_view.dart';
 import 'package:finances/ui/views/home_view.dart';
 import 'package:finances/ui/views/new_transaction_view.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,11 @@ class Router {
         return MaterialPageRoute(builder: (_) => HomeView());
       case 'new_transaction':
         return MaterialPageRoute(builder: (_) => NewTransactionView());
+      case 'home':
+        return MaterialPageRoute(builder: (_) => HomeView());
+      case 'details':
+        var transaction = settings.arguments as Transaction;
+        return MaterialPageRoute(builder: (_) => DetailsView(transaction));
       case 'create_transaction':
         var args = settings.arguments as List<dynamic>;
         return MaterialPageRoute(builder: (_) =>

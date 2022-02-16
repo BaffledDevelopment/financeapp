@@ -35,10 +35,8 @@ dependencies:
   get_it: any
   overlay_container: any
   moor_flutter: ^4.0.0
-
-
-
-
+  toast: any
+  fluttertoast: ^8.0.7
 
 
 

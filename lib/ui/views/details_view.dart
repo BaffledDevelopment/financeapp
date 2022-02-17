@@ -81,6 +81,7 @@ class DetailsView extends StatelessWidget {
                   "Delete",
                 ),
                 onPressed: () async {
+
                   await model.deleteTransacation(transaction);
                   // hide dialog
                   Navigator.of(context).pop();

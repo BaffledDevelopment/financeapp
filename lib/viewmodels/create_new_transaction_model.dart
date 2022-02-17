@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:finances/database/databaseimpl.dart';
 import 'package:finances/services/database_service.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:moor_flutter/moor_flutter.dart';
 
 import '../locator.dart';
 
@@ -86,13 +87,13 @@ class CreateNewTransactionModel extends BaseModel {
       return;
     }
 
-    Transaction newTransaction = Transaction(
-        type: type,
-        day: selectedDay,
-        month: selectedMonth,
-        memo: memoController.text,
-        amount: int.parse(amount),
-        categoryindex: categoryIndex);
+    final newTransaction = TransactionsCompanion(
+        type: Value.ofNullable(type),
+        day: Value.ofNullable(selectedDay),
+        month: Value.ofNullable(selectedMonth),
+        memo: Value.ofNullable(memoController.text),
+        amount: Value.ofNullable(int.parse(amount)),
+        categoryindex: Value.ofNullable(categoryIndex));
     // insert it!
     await _databaseService.insertTransaction(newTransaction);
 

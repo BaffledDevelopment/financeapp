@@ -12,6 +12,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
   final String day;
   final String month;
   final String memo;
+  final int id;
   final int amount;
   final int categoryindex;
   Transaction(
@@ -19,6 +20,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
       required this.day,
       required this.month,
       required this.memo,
+      required this.id,
       required this.amount,
       required this.categoryindex});
   factory Transaction.fromData(Map<String, dynamic> data, GeneratedDatabase db,
@@ -33,6 +35,8 @@ class Transaction extends DataClass implements Insertable<Transaction> {
           .mapFromDatabaseResponse(data['${effectivePrefix}month'])!,
       memo: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}memo'])!,
+      id: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
       amount: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}amount'])!,
       categoryindex: const IntType()
@@ -46,6 +50,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
     map['day'] = Variable<String>(day);
     map['month'] = Variable<String>(month);
     map['memo'] = Variable<String>(memo);
+    map['id'] = Variable<int>(id);
     map['amount'] = Variable<int>(amount);
     map['categoryindex'] = Variable<int>(categoryindex);
     return map;
@@ -57,6 +62,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
       day: Value(day),
       month: Value(month),
       memo: Value(memo),
+      id: Value(id),
       amount: Value(amount),
       categoryindex: Value(categoryindex),
     );
@@ -70,6 +76,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
       day: serializer.fromJson<String>(json['day']),
       month: serializer.fromJson<String>(json['month']),
       memo: serializer.fromJson<String>(json['memo']),
+      id: serializer.fromJson<int>(json['id']),
       amount: serializer.fromJson<int>(json['amount']),
       categoryindex: serializer.fromJson<int>(json['categoryindex']),
     );
@@ -82,6 +89,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
       'day': serializer.toJson<String>(day),
       'month': serializer.toJson<String>(month),
       'memo': serializer.toJson<String>(memo),
+      'id': serializer.toJson<int>(id),
       'amount': serializer.toJson<int>(amount),
       'categoryindex': serializer.toJson<int>(categoryindex),
     };
@@ -92,6 +100,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
           String? day,
           String? month,
           String? memo,
+          int? id,
           int? amount,
           int? categoryindex}) =>
       Transaction(
@@ -99,6 +108,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
         day: day ?? this.day,
         month: month ?? this.month,
         memo: memo ?? this.memo,
+        id: id ?? this.id,
         amount: amount ?? this.amount,
         categoryindex: categoryindex ?? this.categoryindex,
       );
@@ -109,6 +119,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
           ..write('day: $day, ')
           ..write('month: $month, ')
           ..write('memo: $memo, ')
+          ..write('id: $id, ')
           ..write('amount: $amount, ')
           ..write('categoryindex: $categoryindex')
           ..write(')'))
@@ -117,7 +128,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
 
   @override
   int get hashCode =>
-      Object.hash(type, day, month, memo, amount, categoryindex);
+      Object.hash(type, day, month, memo, id, amount, categoryindex);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -126,6 +137,7 @@ class Transaction extends DataClass implements Insertable<Transaction> {
           other.day == this.day &&
           other.month == this.month &&
           other.memo == this.memo &&
+          other.id == this.id &&
           other.amount == this.amount &&
           other.categoryindex == this.categoryindex);
 }
@@ -135,6 +147,7 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
   final Value<String> day;
   final Value<String> month;
   final Value<String> memo;
+  final Value<int> id;
   final Value<int> amount;
   final Value<int> categoryindex;
   const TransactionsCompanion({
@@ -142,6 +155,7 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
     this.day = const Value.absent(),
     this.month = const Value.absent(),
     this.memo = const Value.absent(),
+    this.id = const Value.absent(),
     this.amount = const Value.absent(),
     this.categoryindex = const Value.absent(),
   });
@@ -150,6 +164,7 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
     required String day,
     required String month,
     required String memo,
+    this.id = const Value.absent(),
     required int amount,
     required int categoryindex,
   })  : type = Value(type),
@@ -163,6 +178,7 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
     Expression<String>? day,
     Expression<String>? month,
     Expression<String>? memo,
+    Expression<int>? id,
     Expression<int>? amount,
     Expression<int>? categoryindex,
   }) {
@@ -171,6 +187,7 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
       if (day != null) 'day': day,
       if (month != null) 'month': month,
       if (memo != null) 'memo': memo,
+      if (id != null) 'id': id,
       if (amount != null) 'amount': amount,
       if (categoryindex != null) 'categoryindex': categoryindex,
     });
@@ -181,6 +198,7 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
       Value<String>? day,
       Value<String>? month,
       Value<String>? memo,
+      Value<int>? id,
       Value<int>? amount,
       Value<int>? categoryindex}) {
     return TransactionsCompanion(
@@ -188,6 +206,7 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
       day: day ?? this.day,
       month: month ?? this.month,
       memo: memo ?? this.memo,
+      id: id ?? this.id,
       amount: amount ?? this.amount,
       categoryindex: categoryindex ?? this.categoryindex,
     );
@@ -208,6 +227,9 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
     if (memo.present) {
       map['memo'] = Variable<String>(memo.value);
     }
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
     if (amount.present) {
       map['amount'] = Variable<int>(amount.value);
     }
@@ -224,6 +246,7 @@ class TransactionsCompanion extends UpdateCompanion<Transaction> {
           ..write('day: $day, ')
           ..write('month: $month, ')
           ..write('memo: $memo, ')
+          ..write('id: $id, ')
           ..write('amount: $amount, ')
           ..write('categoryindex: $categoryindex')
           ..write(')'))
@@ -257,6 +280,13 @@ class $TransactionsTable extends Transactions
   late final GeneratedColumn<String?> memo = GeneratedColumn<String?>(
       'memo', aliasedName, false,
       type: const StringType(), requiredDuringInsert: true);
+  final VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+      'id', aliasedName, false,
+      type: const IntType(),
+      requiredDuringInsert: false,
+      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _amountMeta = const VerificationMeta('amount');
   @override
   late final GeneratedColumn<int?> amount = GeneratedColumn<int?>(
@@ -270,7 +300,7 @@ class $TransactionsTable extends Transactions
       type: const IntType(), requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
-      [type, day, month, memo, amount, categoryindex];
+      [type, day, month, memo, id, amount, categoryindex];
   @override
   String get aliasedName => _alias ?? 'transactions';
   @override
@@ -304,6 +334,9 @@ class $TransactionsTable extends Transactions
     } else if (isInserting) {
       context.missing(_memoMeta);
     }
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
     if (data.containsKey('amount')) {
       context.handle(_amountMeta,
           amount.isAcceptableOrUnknown(data['amount']!, _amountMeta));
@@ -322,7 +355,7 @@ class $TransactionsTable extends Transactions
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
+  Set<GeneratedColumn> get $primaryKey => {id};
   @override
   Transaction map(Map<String, dynamic> data, {String? tablePrefix}) {
     return Transaction.fromData(data, attachedDatabase,

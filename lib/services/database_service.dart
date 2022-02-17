@@ -14,15 +14,15 @@ class DataBaseService {
     return allTrans;
   }
 
-  Future deleteTransaction(Transaction transaction) async {
+  Future<int> deleteTransaction(TransactionsCompanion transaction) async {
     return await _database.transactionDao.deleteTransaction(transaction);
   }
 
-  Future insertTransaction(Transaction transaction) async {
+  Future<int> insertTransaction(TransactionsCompanion transaction) async {
     return await _database.transactionDao.insertTransaction(transaction);
   }
 
-  Future updateTransaction(Transaction transaction) async {
+  Future updateTransaction(TransactionsCompanion transaction) async {
     return await _database.transactionDao.updateTransaction(transaction);
   }
 

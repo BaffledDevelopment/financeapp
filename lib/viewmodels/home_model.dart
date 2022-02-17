@@ -17,8 +17,6 @@ class HomeModel extends BaseModel {
   final CategoryIconService _categoryIconService =
   locator<CategoryIconService>();
 
-
-
   List<Transaction> transactions = List<Transaction>.empty();
   bool isCollapsed = false;
   late String appBarTitle;
@@ -78,6 +76,9 @@ class HomeModel extends BaseModel {
   init() async {
     selectedMonthIndex = DateTime.now().month - 1;
     appBarTitle = months[DateTime.now().month - 1];
+
+    expenseSum = await _dataBaseService.getExpenseSum(appBarTitle);
+    incomeSum = await _dataBaseService.getIncomeSum(appBarTitle);
 
     print("Expense : $expenseSum");
     print("Income : $incomeSum");

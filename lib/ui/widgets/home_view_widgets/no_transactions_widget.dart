@@ -12,7 +12,7 @@ class NoTransactionsWidget extends StatelessWidget {
         Container(
             width: 60.0),
         Image.asset(
-          'assets/icons/no-money.png',
+          'assets/no-money.png',
           width: 120,
           height: 120,
         ),

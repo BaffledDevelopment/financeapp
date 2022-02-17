@@ -41,7 +41,7 @@ class DetailsModel extends BaseModel {
     }
   }
 
-  Future deleteTransacation(Transaction transaction) async {
+  Future deleteTransacation(TransactionsCompanion transaction) async {
     return await _databaseService.deleteTransaction(transaction);
   }
 }

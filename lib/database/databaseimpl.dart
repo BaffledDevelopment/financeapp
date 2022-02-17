@@ -43,12 +43,12 @@ class TransactionDao extends DatabaseAccessor<AppDatabase>
 
   Future<List<Transaction>> getAllTransactions() => select(transactions).get();
 
-  Future insertTransaction(Transaction transaction) =>
+  Future<int> insertTransaction(TransactionsCompanion transaction) =>
       into(transactions).insert(transaction);
 
-  Future updateTransaction(Transaction transaction) =>
+  Future updateTransaction(TransactionsCompanion transaction) =>
       update(transactions).replace(transaction);
 
-  Future deleteTransaction(Transaction transaction) =>
+  Future<int> deleteTransaction(TransactionsCompanion transaction) =>
       delete(transactions).delete(transaction);
 }

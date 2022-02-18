@@ -49,6 +49,6 @@ class TransactionDao extends DatabaseAccessor<AppDatabase>
   Future updateTransaction(TransactionsCompanion transaction) =>
       update(transactions).replace(transaction);
 
-  Future<int> deleteTransaction(TransactionsCompanion transaction) =>
+  Future deleteTransaction(TransactionsCompanion transaction) =>
       delete(transactions).delete(transaction);
 }

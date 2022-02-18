@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:finances/database/databaseimpl.dart';
 import 'package:finances/services/database_service.dart';
 import 'package:finances/viewmodels/base_model.dart';
+import 'package:moor/moor.dart';
 
 import '../locator.dart';
 
@@ -41,7 +42,19 @@ class DetailsModel extends BaseModel {
     }
   }
 
-  Future deleteTransacation(TransactionsCompanion transaction) async {
-    return await _databaseService.deleteTransaction(transaction);
+  Future deleteTransacation(Transaction transaction) async {
+
+    final newTransaction = TransactionsCompanion(
+        type: Value.ofNullable(transaction.type),
+        day: Value.ofNullable(transaction.day),
+        month: Value.ofNullable(transaction.month),
+        memo: Value.ofNullable(transaction.memo),
+        amount: Value.ofNullable(transaction.amount),
+        categoryindex: Value.ofNullable(transaction.categoryindex));
+    // delet it!
+
+    return await _databaseService.deleteTransaction(newTransaction);
   }
+
+
 }

@@ -26,10 +26,10 @@ class DetailsCard extends StatelessWidget {
                 "\t\t\t" +
                     model.getCategoryIconName(
                         transaction.categoryindex, transaction.type),
-                style: TextStyle(fontSize: 30),
+                style: const TextStyle(fontSize: 30),
               ),
             ),
-            Divider(
+            const Divider(
               thickness: 1,
             ),
 

@@ -2,6 +2,7 @@ import 'package:finances/database/databaseimpl.dart';
 import 'package:finances/ui/views/auth_view.dart';
 import 'package:finances/ui/views/create_new_transaction_view.dart';
 import 'package:finances/ui/views/details_view.dart';
+import 'package:finances/ui/views/edit_view.dart';
 import 'package:finances/ui/views/home_view.dart';
 import 'package:finances/ui/views/new_transaction_view.dart';
 import 'package:finances/ui/views/piechart_view.dart';
@@ -25,6 +26,9 @@ class Router {
         return MaterialPageRoute(builder: (_) => PieChartView());
       case 'spline_chart':
         return MaterialPageRoute(builder: (_) => SplineChartView());
+      case 'edit':
+        var transaction = settings.arguments as Transaction;
+        return MaterialPageRoute(builder: (_) => EditView(transaction));
       case 'home':
         return MaterialPageRoute(builder: (_) => HomeView());
       case 'details':

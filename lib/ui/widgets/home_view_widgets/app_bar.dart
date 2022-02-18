@@ -12,7 +12,8 @@ class MyAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        model?.titleClicked();
+        // model?.titleClicked();
+        Navigator.of(context).pushNamed("select");
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),

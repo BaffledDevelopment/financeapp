@@ -17,7 +17,7 @@ class SplineChartView extends StatelessWidget {
       onModelReady: (model) => model.init(true),
       builder: (context, model, child) => Scaffold(
           appBar: AppBar(
-            title: Text('Spline Chart'),
+            title: const Text('Spline Chart'),
           ),
 
           body: Column(

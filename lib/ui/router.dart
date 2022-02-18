@@ -6,16 +6,24 @@ import 'package:finances/ui/views/edit_view.dart';
 import 'package:finances/ui/views/home_view.dart';
 import 'package:finances/ui/views/new_transaction_view.dart';
 import 'package:finances/ui/views/piechart_view.dart';
+import 'package:finances/ui/views/selector_view.dart';
 import 'package:finances/ui/views/spline_chart_view.dart';
 import 'package:flutter/material.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 const String initialRoute = "login";
+
+final data = [
+  LinearSales(0, 100),
+  LinearSales(1, 75),
+  LinearSales(2, 25),
+  LinearSales(3, 5),
+];
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-
-      // need routes for dashboard, pie chart, stats, data screen, some more?
+    // need routes for dashboard, pie chart, stats, data screen, some more?
       case '/':
         return MaterialPageRoute(builder: (_) => HomeView());
       case 'auth':
@@ -23,7 +31,11 @@ class Router {
       case 'new_transaction':
         return MaterialPageRoute(builder: (_) => NewTransactionView());
       case 'chart':
-        return MaterialPageRoute(builder: (_) => PieChartView());
+        return MaterialPageRoute(
+
+            builder: (_) => PieChartView());
+      case 'select':
+        return MaterialPageRoute(builder: (_) => SelectorMonView());
       case 'spline_chart':
         return MaterialPageRoute(builder: (_) => SplineChartView());
       case 'edit':
@@ -34,6 +46,7 @@ class Router {
       case 'details':
         var transaction = settings.arguments as Transaction;
         return MaterialPageRoute(builder: (_) => DetailsView(transaction));
+
       case 'create_transaction':
         var args = settings.arguments as List<dynamic>;
         return MaterialPageRoute(builder: (_) =>
@@ -49,4 +62,11 @@ class Router {
                 ));
     }
   }
+}
+
+class LinearSales {
+  final int year;
+  final int sales;
+
+  LinearSales(this.year, this.sales);
 }

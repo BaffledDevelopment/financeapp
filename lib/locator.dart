@@ -9,6 +9,7 @@ import 'package:finances/viewmodels/home_model.dart';
 import 'package:finances/services/auth_service.dart';
 import 'package:finances/viewmodels/new_transaction_model.dart';
 import 'package:finances/viewmodels/piechart_model.dart';
+import 'package:finances/viewmodels/selector_model.dart';
 import 'package:finances/viewmodels/spline_chart_model.dart';
 
 import 'package:get_it/get_it.dart';
@@ -33,6 +34,7 @@ void setupLocator() {
   locator.registerFactory(() => PieChartModel());
   locator.registerFactory(() => SplineChartModel());
   locator.registerFactory(() => EditModel());
+  locator.registerFactory(() => SelectorMonModel());
 
 
 }

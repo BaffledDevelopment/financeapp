@@ -9,7 +9,7 @@ import 'package:finances/ui/views/piechart_view.dart';
 import 'package:finances/ui/views/selector_view.dart';
 import 'package:finances/ui/views/spline_chart_view.dart';
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+// import 'package:charts_flutter/flutter.dart' as charts;
 
 const String initialRoute = "login";
 

@@ -17,7 +17,7 @@ class EditView extends StatelessWidget {
       onModelReady: (model) => model.init(transaction),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
-          title: Text('Edit'),
+          title: const Text('Edit'),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -31,9 +31,12 @@ class EditView extends StatelessWidget {
                       size: 20,
                     )),
               ),
+              Container(height: 15),
 
-              buildTextField(model.memoController, 'Memo:',
-                  "Enter a memo for your transaction", Icons.edit, false),
+              buildTextField(model.memoController, 'Note:',
+                  "Enter a note for your transaction", Icons.edit, false),
+
+              Container(height: 15),
 
               buildTextField(
                   model.amountController,
@@ -42,19 +45,19 @@ class EditView extends StatelessWidget {
                   Icons.attach_money,
                   true),
 
-              Align(
+              Container(height: 15),
+
+              const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'SELECT DATE:',
                   style: TextStyle(fontStyle: FontStyle.italic, fontSize: 16),
                 ),
               ),
-              Divider(
+              const Divider(
                 thickness: 2,
               ),
-              Divider(
-                thickness: 2,
-              ),
+
               Container(
                 width: 20,
                 height: 50,
@@ -65,16 +68,23 @@ class EditView extends StatelessWidget {
                   },
                 ),
               ),
-
+              Container(height: 15),
               Align(
-                alignment: Alignment.centerLeft,
-                child: RaisedButton(
+                alignment: Alignment.center,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                      side: BorderSide(
+                        color: Colors.pink,
+                        width: 1.0,
+                      ),
+
+                      ),
+                    )),
                   child: Text(
-                    'EDIT',
-                    style: TextStyle(fontSize: 16),
+                      "EDIT"
                   ),
-                  color: Color.fromARGB(255, 255, 241, 159),
-                  textColor: Colors.black,
                   onPressed: () async {
                     await model.editTransaction(context, transaction);
                   },

@@ -27,33 +27,3 @@
 *  Provider для управления "стейтом" приложения
 *  MVVM архитектура + сервис локатор get_it
 *  Router для роутинга отображаемых экранов
-
-## Скриншоты приложения 
-
-![Экран логина](https://github.com/BaffledDevelopment/financeapp/blob/main/assets/Screenshot_20220219-223242.png "Логин")
-____
-
-
-
-![Главный экран](https://github.com/BaffledDevelopment/financeapp/blob/main/assets/Screenshot_20220219-223340.png "Главный экран")
-
-____
-
-
-![Экран выбора месяца](https://github.com/BaffledDevelopment/financeapp/blob/main/assets/Screenshot_20220219-223352.png "Выбор месяца")
-
-____
-
-![Экран создания операции](https://github.com/BaffledDevelopment/financeapp/blob/main/assets/Screenshot_20220219-223401.png "Операция")
-
-____
-
-
-![Экран подробной информации](https://github.com/BaffledDevelopment/financeapp/blob/main/assets/Screenshot_20220219-223406.png "Логин")
-
-____
-
-
-![Вьюха удаления](https://github.com/BaffledDevelopment/financeapp/blob/main/assets/Screenshot_20220219-223411.png "Удаление")
-
-

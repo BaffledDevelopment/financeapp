@@ -1,11 +1,19 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../viewmodels/auth_model.dart';
+import 'base_view.dart';
+
 class AuthView extends StatelessWidget {
-  const AuthView({Key? key}) : super(key: key);
+  AuthView({Key? key}) : super(key: key);
+
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BaseView<AuthModel>(
+        builder: (context, model, child) => Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.cyan,
       ),
@@ -25,6 +33,7 @@ class AuthView extends StatelessWidget {
                   height: 25,
                 ),
                 TextFormField(
+                  controller: emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
                     labelText: 'Email Address',
@@ -46,6 +55,7 @@ class AuthView extends StatelessWidget {
                   height: 20,
                 ),
                 TextFormField(
+                  controller: passwordController,
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
 
@@ -96,7 +106,22 @@ class AuthView extends StatelessWidget {
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: MaterialButton(
-                    onPressed: () => Navigator.of(context).pushNamed("home"),
+                    onPressed: () async {
+                      if (emailController.text.isNotEmpty ||
+                          passwordController.text.isNotEmpty) {
+                        try {
+                          await model?.logIn(
+                              email: emailController.text.trim(),
+                              password: passwordController.text.trim(),
+                              context:
+                              context!); // passing context into model is haram
+                          //  REFACTOR THIS
+                        } on FirebaseAuthException catch (e) {
+                          print(e);
+                        }
+                        // Navigator.pushNamed(context!, "home");
+                      }
+                    },
                     color: Colors.cyan,
                     child: const Text(
                       'LOGIN',
@@ -127,7 +152,7 @@ class AuthView extends StatelessWidget {
                     TextButton(
                       onPressed: () {
                         print('Sign Up');
-                        Navigator.of(context)
+                        Navigator.of(context!)
                             .pushNamed("registration");
                       },
                       child: const Text('Register Now'),
@@ -139,6 +164,6 @@ class AuthView extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ));
   }
 }

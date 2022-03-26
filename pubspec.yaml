@@ -41,6 +41,9 @@ dependencies:
   flutter_portal: ^0.4.0
   syncfusion_flutter_charts: any
   chips_choice_null_safety: any
+  firebase_core: ^1.10.0
+  cloud_firestore: any
+  firebase_auth: any
 #  charts_flutter: ^0.11.0
 #  chips_choice: any
   pie_chart: any

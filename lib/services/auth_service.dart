@@ -30,7 +30,6 @@ class AuthenticationService {
       );
 
       return authResult.user != null;
-
     } catch (e) {
       print(e);
     }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class TransactionTypeSpinner extends StatelessWidget {
   final selectedItem;
   final Function changedSelectedItem;
+
   const TransactionTypeSpinner(this.selectedItem, this.changedSelectedItem);
 
   @override

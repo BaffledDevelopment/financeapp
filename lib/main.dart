@@ -17,22 +17,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Portal(
         child: MaterialApp(
-          title: 'Finance Tracker',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primaryColor: const Color.fromARGB(255, 255, 241, 159),
-          ),
-          initialRoute: 'auth',
-          onGenerateRoute: Router.generateRoute,
-        )
-        );
+      title: 'Finance Tracker',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primaryColor: const Color.fromARGB(255, 255, 241, 159),
+      ),
+      initialRoute: 'auth',
+      onGenerateRoute: Router.generateRoute,
+    ));
   }
 }
-
-
-
-
-
-
-
-

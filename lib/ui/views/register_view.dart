@@ -96,7 +96,8 @@ class SignupPage extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(5.0),
-                      child: RoundedButton(  text: "Sign Up",
+                      child: RoundedButton(
+                        text: "Sign Up",
                         press: () async {
                           if (passwordController.text ==
                               passwordConfirmController.text) {
@@ -116,8 +117,8 @@ class SignupPage extends StatelessWidget {
                                 gravity: ToastGravity.BOTTOM);
                           }
                         },
-                      ),),
-
+                      ),
+                    ),
                     SizedBox(
                       height: MediaQuery.of(context).size.width * 0.1,
                     ),

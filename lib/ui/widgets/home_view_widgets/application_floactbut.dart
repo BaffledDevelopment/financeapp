@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-
 class ApplicationFloActBut extends StatelessWidget {
-
   final Function closeMonthPicker;
 
   const ApplicationFloActBut(this.closeMonthPicker);

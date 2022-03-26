@@ -13,7 +13,7 @@ import 'base_model.dart';
 
 class RegisterViewModel extends BaseModel {
   final AuthenticationService _authenticationService =
-  locator<AuthenticationService>();
+      locator<AuthenticationService>();
 
   Future signUp({
     required String email,
@@ -34,22 +34,22 @@ class RegisterViewModel extends BaseModel {
       if (result) {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (BuildContext context) => HomeView()),
-                (Route<dynamic> route) => false);
+            (Route<dynamic> route) => false);
 
         final user = FirebaseAuth.instance.currentUser!;
 
         FirebaseFirestore.instance
-            .collection('users')
-            .doc(user.uid)
-            .set({
-          'uid': user.uid,
-          'name': name,
-          'email': email,
-          'hashedPassword': password,
-        })
-            .then((value) => print("User added!"))
-            .catchError((e) => print("Failed to add user"))
-        as CollectionReference<Object?>;
+                .collection('users')
+                .doc(user.uid)
+                .set({
+                  'uid': user.uid,
+                  'name': name,
+                  'email': email,
+                  'hashedPassword': password,
+                })
+                .then((value) => print("User added!"))
+                .catchError((e) => print("Failed to add user"))
+            as CollectionReference<Object?>;
       } else {
         Fluttertoast.showToast(
             msg: "General sign up failure. Please try again later",

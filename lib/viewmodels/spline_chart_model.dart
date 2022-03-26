@@ -22,11 +22,10 @@ class SplineChartModel extends BaseModel {
     'Dec'
   ];
 
-  final DataBaseService _dataBaseService =
-  locator<DataBaseService>();
+  final DataBaseService _dataBaseService = locator<DataBaseService>();
 
   final CategoryIconService _categoryIconService =
-  locator<CategoryIconService>();
+      locator<CategoryIconService>();
 
   List<Transaction> transactions = List.empty();
 
@@ -75,10 +74,7 @@ class SplineChartModel extends BaseModel {
 
     transactions.forEach((element) {
       prepareDataMap(element);
-
-
     });
-
 
     notifyListeners();
   }
@@ -159,26 +155,21 @@ class SplineChartModel extends BaseModel {
     await init(false);
   }
 
-
-
   void prepareDataMap(element) {
     if (type == 'income') {
       dataMap[_categoryIconService.incomeList
           .elementAt(element.categoryindex)
           .name] = (dataMap[_categoryIconService.incomeList
-          .elementAt(element.categoryindex)
-          .name]! +
+              .elementAt(element.categoryindex)
+              .name]! +
           element.amount);
     } else {
       dataMap[_categoryIconService.expenseList
           .elementAt(element.categoryindex)
           .name] = (dataMap[_categoryIconService.expenseList
-          .elementAt(element.categoryindex)
-          .name]! +
+              .elementAt(element.categoryindex)
+              .name]! +
           element.amount);
-
     }
   }
-
-
 }

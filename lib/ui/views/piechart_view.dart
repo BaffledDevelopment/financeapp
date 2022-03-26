@@ -38,9 +38,8 @@ class LinearSales {
   final int sales;
 
   LinearSales(this.year, this.sales);
-  }
+}
 
-  /// Create one series with sample hard coded data.
-
+/// Create one series with sample hard coded data.
 
 /// Sample linear data type.

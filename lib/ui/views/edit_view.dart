@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:finances/database/databaseimpl.dart';
 import 'package:finances/viewmodels/edit_model.dart';
 
-
 import 'base_view.dart';
 
 class EditView extends StatelessWidget {
   final Transaction transaction;
+
   EditView(this.transaction);
 
   @override
@@ -27,26 +27,21 @@ class EditView extends StatelessWidget {
                 title: Text(model!.category.name),
                 leading: CircleAvatar(
                     child: Icon(
-                      model.category.icon,
-                      size: 20,
-                    )),
+                  model.category.icon,
+                  size: 20,
+                )),
               ),
               Container(height: 15),
-
               buildTextField(model.memoController, 'Note:',
                   "Enter a note for your transaction", Icons.edit, false),
-
               Container(height: 15),
-
               buildTextField(
                   model.amountController,
                   'Amount:',
                   "Enter a the amount for the transaction",
                   Icons.attach_money,
                   true),
-
               Container(height: 15),
-
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -57,7 +52,6 @@ class EditView extends StatelessWidget {
               const Divider(
                 thickness: 2,
               ),
-
               Container(
                 width: 20,
                 height: 50,
@@ -73,18 +67,16 @@ class EditView extends StatelessWidget {
                 alignment: Alignment.center,
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0),
                       side: BorderSide(
                         color: Colors.pink,
                         width: 1.0,
                       ),
-
-                      ),
-                    )),
-                  child: Text(
-                      "EDIT"
-                  ),
+                    ),
+                  )),
+                  child: Text("EDIT"),
                   onPressed: () async {
                     await model.editTransaction(context, transaction);
                   },

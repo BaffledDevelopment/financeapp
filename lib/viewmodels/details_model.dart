@@ -8,13 +8,11 @@ import 'package:moor/moor.dart';
 
 import '../locator.dart';
 
-
 class DetailsModel extends BaseModel {
   final CategoryIconService _categoryIconService =
-  locator<CategoryIconService>();
+      locator<CategoryIconService>();
 
-  final DataBaseService _databaseService =
-  locator<DataBaseService>();
+  final DataBaseService _databaseService = locator<DataBaseService>();
 
   Icon getIconForCategory(int index, String type) {
     if (type == 'income') {
@@ -43,7 +41,6 @@ class DetailsModel extends BaseModel {
   }
 
   Future deleteTransacation(Transaction transaction) async {
-
     final newTransaction = TransactionsCompanion(
         type: Value.ofNullable(transaction.type),
         day: Value.ofNullable(transaction.day),
@@ -55,6 +52,4 @@ class DetailsModel extends BaseModel {
 
     return await _databaseService.deleteTransaction(newTransaction);
   }
-
-
 }

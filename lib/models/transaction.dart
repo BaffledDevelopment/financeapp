@@ -9,10 +9,10 @@ class Transaction {
 
   Transaction(
       {required this.type,
-        required this.day,
-        required this.month,
-        required this.memo,
-        required this.id,
-        required this.amount,
-        required this.categoryindex});
+      required this.day,
+      required this.month,
+      required this.memo,
+      required this.id,
+      required this.amount,
+      required this.categoryindex});
 }

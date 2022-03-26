@@ -1,14 +1,15 @@
 import 'package:finances/database/databaseimpl.dart';
 import 'package:finances/viewmodels/home_model.dart';
 import 'package:flutter/material.dart';
+
 class TransactionsListView extends StatelessWidget {
   final List<Transaction> transactions;
   final HomeModel model;
 
   const TransactionsListView(
-      this.transactions,
-      this.model,
-      );
+    this.transactions,
+    this.model,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +22,14 @@ class TransactionsListView extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(context, "details", arguments: transaction)
                     .then((value) => {
-                  if (value != null)
-                    {
-                      if (value == true)
-                        {print("Transaction deleted"), model.init()}
-                      else
-                        {print("Not deleted")}
-                    }
-                });
+                          if (value != null)
+                            {
+                              if (value == true)
+                                {print("Transaction deleted"), model.init()}
+                              else
+                                {print("Not deleted")}
+                            }
+                        });
               },
               child: Container(
                 padding: EdgeInsets.all(8),

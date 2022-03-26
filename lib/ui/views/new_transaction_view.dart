@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 import 'base_view.dart';
 
-
 class NewTransactionView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -24,30 +23,32 @@ class NewTransactionView extends StatelessWidget {
             children: model
                 .loadCategoriesIcons()
                 .map((e) => Card(
-                elevation: 4,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.of(context!).pushNamed("create_transaction",
-                        arguments: [e, model.selectedItem]);
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(4),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Text(e.name),
-                        Container(height: 10.0,),
-                        CircleAvatar(
-                          radius: 25,
-                          child: Icon(
-                            e.icon,
-                            size: 20,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                )))
+                    elevation: 4,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context!).pushNamed("create_transaction",
+                            arguments: [e, model.selectedItem]);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(4),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Text(e.name),
+                            Container(
+                              height: 10.0,
+                            ),
+                            CircleAvatar(
+                              radius: 25,
+                              child: Icon(
+                                e.icon,
+                                size: 20,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    )))
                 .toList(),
           ),
         ),

@@ -19,9 +19,12 @@ class SummaryWidget extends StatelessWidget {
             children: <Widget>[
               Column(
                 children: <Widget>[
-                  const Text('Income', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
-
-                  Text(income.toString(), style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w600))
+                  const Text('Income',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
+                  Text(income.toString(),
+                      style: const TextStyle(
+                          fontSize: 28, fontWeight: FontWeight.w600))
                 ],
               ),
               const Text(
@@ -37,8 +40,9 @@ class SummaryWidget extends StatelessWidget {
                     'Expense',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
                   ),
-
-                  Text(expense.toString(), style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w600))
+                  Text(expense.toString(),
+                      style: const TextStyle(
+                          fontSize: 28, fontWeight: FontWeight.w600))
                 ],
               ),
               const Text(
@@ -54,9 +58,9 @@ class SummaryWidget extends StatelessWidget {
                     'Balance',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
                   ),
-
                   Text((income - expense).toString(),
-                      style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w600))
+                      style: const TextStyle(
+                          fontSize: 28, fontWeight: FontWeight.w600))
                 ],
               ),
             ],

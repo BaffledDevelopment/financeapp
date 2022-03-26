@@ -11,7 +11,7 @@ import 'base_model.dart';
 
 class AuthModel extends BaseModel {
   final AuthenticationService _authenticationService =
-  locator<AuthenticationService>();
+      locator<AuthenticationService>();
 
   Future logIn({
     required String email,
@@ -28,9 +28,10 @@ class AuthModel extends BaseModel {
     if (result is bool) {
 
       if (result) {
+
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (BuildContext context) => HomeView()),
-                (Route<dynamic> route) => false);
+            (Route<dynamic> route) => false);
       } else {
         Fluttertoast.showToast(
             msg: "General login up failure. Please try again later",

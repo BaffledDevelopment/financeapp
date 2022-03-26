@@ -25,8 +25,7 @@ class SelectorMonView extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   ChipsChoice<int>.single(
-                    choiceStyle: C2ChoiceStyle(
-                        elevation: 1, color: Colors.red),
+                    choiceStyle: C2ChoiceStyle(elevation: 1, color: Colors.red),
                     value: model!.selectedMonthIndex,
                     wrapped: true,
                     choiceItems: C2Choice.listFrom<int, String>(
@@ -37,8 +36,8 @@ class SelectorMonView extends StatelessWidget {
                     onChanged: (val) => model.changeSelectedMonth(val),
                   ),
                   ChipsChoice<int>.single(
-                    choiceStyle: C2ChoiceStyle(
-                        elevation: 1, color: Colors.green),
+                    choiceStyle:
+                        C2ChoiceStyle(elevation: 1, color: Colors.green),
                     value: model.type == 'income' ? 0 : 1,
                     wrapped: true,
                     choiceItems: C2Choice.listFrom<int, String>(
@@ -48,7 +47,7 @@ class SelectorMonView extends StatelessWidget {
                     ),
                     onChanged: (val) => model.changeType(val),
                   ),
-                      // : SelectorMon(dataMap: model.dataMap),
+                  // : SelectorMon(dataMap: model.dataMap),
                 ],
               ),
             ),

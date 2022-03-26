@@ -6,6 +6,7 @@ import 'package:finances/ui/widgets/details_table_widget.dart';
 class DetailsCard extends StatelessWidget {
   final Transaction transaction;
   final DetailsModel model;
+
   DetailsCard({required this.transaction, required this.model});
 
   @override
@@ -32,7 +33,6 @@ class DetailsCard extends StatelessWidget {
             const Divider(
               thickness: 1,
             ),
-
             DetailsTable(transaction: transaction),
           ],
         ),

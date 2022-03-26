@@ -1,4 +1,3 @@
-
 import 'package:finances/viewmodels/spline_chart_model.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +18,6 @@ class SplineChartView extends StatelessWidget {
           appBar: AppBar(
             title: const Text('Spline Chart'),
           ),
-
           body: Column(
             children: [
               Container(
@@ -35,20 +33,16 @@ class SplineChartView extends StatelessWidget {
                           // Initialize category axis
                           primaryXAxis: CategoryAxis(),
                           series: <ChartSeries>[
-                            // Initialize line series
-                            LineSeries<ExpensesChartData, String>(
-                                dataSource: model!.dataList,
-
-                                xValueMapper: (ExpensesChartData sales, _) => sales.month,
-                                yValueMapper: (ExpensesChartData sales, _) => sales.expenses
-                            )
-                          ]
-                      )
-                  )
-              )],
-          )
-      ),
+                        // Initialize line series
+                        LineSeries<ExpensesChartData, String>(
+                            dataSource: model!.dataList,
+                            xValueMapper: (ExpensesChartData sales, _) =>
+                                sales.month,
+                            yValueMapper: (ExpensesChartData sales, _) =>
+                                sales.expenses)
+                      ])))
+            ],
+          )),
     );
   }
 }
-

@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:finances/models/category.dart';
 
 class CategoryIconService {
-
   final expenseList = {
     Category(0, "Food", FontAwesomeIcons.pizzaSlice, Colors.green),
     Category(1, "Bills", FontAwesomeIcons.moneyBill, Colors.blue),

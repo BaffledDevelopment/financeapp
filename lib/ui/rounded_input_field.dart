@@ -5,6 +5,7 @@ class RoundedInputField extends StatelessWidget {
   final TextEditingController controller;
 
   final String hintText;
+
   const RoundedInputField({
     Key? key,
     required this.hintText,

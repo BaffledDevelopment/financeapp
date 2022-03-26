@@ -15,41 +15,34 @@ class CreateNewTransactionView extends StatelessWidget {
       onModelReady: (model) => model.init(selectedCategory, category.index),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
-          title: selectedCategory == 1 ? const Text('Income') : const Text('Expense'),
+          title: selectedCategory == 1
+              ? const Text('Income')
+              : const Text('Expense'),
         ),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: ListView(
-
               children: <Widget>[
-
                 ListTile(
                   title: Text(category.name),
                   leading: CircleAvatar(
                       child: Icon(
-                        category.icon,
-                        size: 20,
-                      )),
+                    category.icon,
+                    size: 20,
+                  )),
                 ),
-                Container(
-                    height: 30.0),
-
-
+                Container(height: 30.0),
                 buildTextField(model!.memoController, 'Note:',
                     "Enter a note for your transaction", Icons.edit, false),
-                Container(
-                    height: 20.0),
-
+                Container(height: 20.0),
                 buildTextField(
                     model.amountController,
                     'Amount:',
                     "Enter a the amount for the transaction",
                     Icons.attach_money,
                     true),
-                Container(
-                    height: 20.0),
-
+                Container(height: 20.0),
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -70,9 +63,7 @@ class CreateNewTransactionView extends StatelessWidget {
                     },
                   ),
                 ),
-                Container(
-                    height: 30.0),
-
+                Container(height: 30.0),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: RaisedButton(

@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 class MyAppBar extends StatelessWidget {
   final HomeModel? model;
   final String? title;
-  const MyAppBar({Key? key, this.model, this.title})
-      : super(key: key);
 
+  const MyAppBar({Key? key, this.model, this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +26,11 @@ class MyAppBar extends StatelessWidget {
             ),
             model!.isCollapsed
                 ? const Icon(
-              Icons.arrow_drop_down,
-            )
+                    Icons.arrow_drop_down,
+                  )
                 : const Icon(
-              Icons.arrow_drop_up,
-            ),
+                    Icons.arrow_drop_up,
+                  ),
           ],
         ),
       ),

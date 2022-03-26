@@ -14,11 +14,10 @@ class EditModel extends BaseModel {
   TextEditingController memoController = TextEditingController();
   TextEditingController amountController = TextEditingController();
 
-  final DataBaseService _dataBaseService =
-  locator<DataBaseService>();
+  final DataBaseService _dataBaseService = locator<DataBaseService>();
 
   final CategoryIconService _categoryIconService =
-  locator<CategoryIconService>();
+      locator<CategoryIconService>();
 
   List months = [
     'Jan',
@@ -93,8 +92,10 @@ class EditModel extends BaseModel {
     String amount = amountController.text;
 
     if (memo.isEmpty || amount.isEmpty) {
-      Fluttertoast.showToast(msg: "Please fill all the fields!",
-          toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.BOTTOM);
+      Fluttertoast.showToast(
+          msg: "Please fill all the fields!",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM);
       return;
     }
 
@@ -108,8 +109,10 @@ class EditModel extends BaseModel {
     // insert it!
     await _dataBaseService.updateTransaction(newTransaction);
 
-    Fluttertoast.showToast(msg: "Edited successfully!",
-        toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
+    Fluttertoast.showToast(
+        msg: "Edited successfully!",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM);
     // return to the home
 
     Navigator.of(context).pushNamedAndRemoveUntil(

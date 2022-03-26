@@ -9,15 +9,13 @@ class NoTransactionsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Container(
-            width: 60.0),
+        Container(width: 60.0),
         Image.asset(
           'assets/no-money.png',
           width: 120,
           height: 120,
         ),
-        Container(
-        width: 30.0),
+        Container(width: 30.0),
         const Text(
           'No transactions\nTap + to add one.',
           textAlign: TextAlign.center,

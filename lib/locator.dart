@@ -37,6 +37,4 @@ void setupLocator() {
   locator.registerFactory(() => RegisterViewModel());
   locator.registerFactory(() => EditModel());
   locator.registerFactory(() => SelectorMonModel());
-
-
 }

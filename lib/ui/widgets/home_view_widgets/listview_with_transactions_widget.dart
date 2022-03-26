@@ -8,23 +8,22 @@ class ListViewTransactions extends StatelessWidget {
   final HomeModel model;
 
   const ListViewTransactions(
-      this.transactions,
-      this.model,
-      );
+    this.transactions,
+    this.model,
+  );
 
   @override
   Widget build(BuildContext context) {
     return Flexible(
-      child: ListView(
-        children: transactions.map((transaction) {
-          return Card(
-            child: InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, "details", arguments: transactions);
-              },
-            ),
-          );
-        }).toList())
-    );
+        child: ListView(
+            children: transactions.map((transaction) {
+      return Card(
+        child: InkWell(
+          onTap: () {
+            Navigator.pushNamed(context, "details", arguments: transactions);
+          },
+        ),
+      );
+    }).toList()));
   }
 }

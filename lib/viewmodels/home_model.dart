@@ -4,18 +4,15 @@ import 'package:finances/services/database_service.dart';
 import 'package:finances/services/icon_service.dart';
 import 'package:finances/viewmodels/base_model.dart';
 
-
-
 import 'package:finances/enum_viewstate.dart';
 import 'package:finances/locator.dart';
 import 'package:flutter/material.dart';
 
 class HomeModel extends BaseModel {
-  final DataBaseService _dataBaseService =
-  locator<DataBaseService>();
+  final DataBaseService _dataBaseService = locator<DataBaseService>();
 
   final CategoryIconService _categoryIconService =
-  locator<CategoryIconService>();
+      locator<CategoryIconService>();
 
   List<Transaction> transactions = List<Transaction>.empty();
   bool isCollapsed = false;
@@ -55,7 +52,6 @@ class HomeModel extends BaseModel {
   titleClicked() {
     isCollapsed = !isCollapsed;
     notifyListeners();
-
   }
 
   void closeMonthPicker() {

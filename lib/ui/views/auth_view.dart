@@ -127,6 +127,8 @@ class AuthView extends StatelessWidget {
                     TextButton(
                       onPressed: () {
                         print('Sign Up');
+                        Navigator.of(context)
+                            .pushNamed("registration");
                       },
                       child: const Text('Register Now'),
                     )

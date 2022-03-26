@@ -1,10 +1,13 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart' hide Router;
 import 'package:finances/ui/router.dart';
 import 'package:finances/locator.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import '';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   setupLocator();
   runApp(MyApp());
 }

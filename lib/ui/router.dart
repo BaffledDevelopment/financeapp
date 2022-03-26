@@ -6,10 +6,11 @@ import 'package:finances/ui/views/edit_view.dart';
 import 'package:finances/ui/views/home_view.dart';
 import 'package:finances/ui/views/new_transaction_view.dart';
 import 'package:finances/ui/views/piechart_view.dart';
+import 'package:finances/ui/views/register_view.dart';
 import 'package:finances/ui/views/selector_view.dart';
 import 'package:finances/ui/views/spline_chart_view.dart';
 import 'package:flutter/material.dart';
-// import 'package:charts_flutter/flutter.dart' as charts;
+
 
 const String initialRoute = "login";
 
@@ -46,6 +47,8 @@ class Router {
       case 'details':
         var transaction = settings.arguments as Transaction;
         return MaterialPageRoute(builder: (_) => DetailsView(transaction));
+      case 'registration':
+        return MaterialPageRoute(builder: (_) => SignupPage());
 
       case 'create_transaction':
         var args = settings.arguments as List<dynamic>;

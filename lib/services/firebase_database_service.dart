@@ -3,18 +3,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class FirebaseDatabaseService {
-
   FirebaseDatabaseService();
 
   final CollectionReference expenseCollection =
-  FirebaseFirestore.instance.collection('users');
+      FirebaseFirestore.instance.collection('users');
 
-  Future<void> updateExpenses(String type,
-      String day,
-      String month,
-      int amount,
-      String note,
-      int categoryIndex,) async {
+  Future<void> updateExpenses(
+    String type,
+    String day,
+    String month,
+    int amount,
+    String note,
+    int categoryIndex,
+  ) async {
     // Todo FILL THIS
   }
 
@@ -25,7 +26,8 @@ class FirebaseDatabaseService {
     required String month,
     required int amount,
     required String note,
-    required int categoryIndex,}) async {
+    required int categoryIndex,
+  }) async {
     await expenseCollection.doc(user.uid).collection("transaction").add({
       "type": type,
       "day": day,
@@ -36,19 +38,22 @@ class FirebaseDatabaseService {
     });
   }
 
-  Future<void> getExpenses(User user) async {    var userDoc =
-  await expenseCollection.where('email', isEqualTo: user.email).get();
+  Future<void> getAllExpenses(User user) async {
+    var userDoc =
+        await expenseCollection.where('email', isEqualTo: user.email).get();
 
-  // var users = expenseCollection.doc(user.uid).collection("").where('email', isEqualTo: user.email).get();
+    // var users = expenseCollection.doc(user.uid).collection("").where('email', isEqualTo: user.email).get();
 
-  userDoc.docs.forEach((element) {
-    print(element.data());
-  });}
-
-  Future<void> deleteExpense(User user) async {
-
+    userDoc.docs.forEach((element) {
+      print(element.data());
+    });
   }
+
+  Future<void> deleteExpense(User user) async {}
 
   Future<void> updateExpense(User user) async {}
 
+  Future<void> getSumOfExpenses(User user) async {}
+
+  Future<void> getExpensesForMonth(User user) async {}
 }

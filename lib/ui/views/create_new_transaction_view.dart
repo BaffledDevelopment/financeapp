@@ -1,16 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:finances/models/category.dart';
 import 'package:finances/viewmodels/create_new_transaction_model.dart';
 import 'package:finances/ui/views/base_view.dart';
 
+import '../../services/firebase_database_service.dart';
+
 class CreateNewTransactionView extends StatelessWidget {
   final Category category;
   final int selectedCategory;
+
 
   CreateNewTransactionView(this.category, this.selectedCategory);
 
   @override
   Widget build(BuildContext context) {
+
     return BaseView<CreateNewTransactionModel>(
       onModelReady: (model) => model.init(selectedCategory, category.index),
       builder: (context, model, child) => Scaffold(
@@ -74,7 +79,9 @@ class CreateNewTransactionView extends StatelessWidget {
                     color: const Color.fromARGB(255, 255, 241, 159),
                     textColor: Colors.black,
                     onPressed: () async {
+
                       await model.addTransaction(context);
+
                     },
                   ),
                 )

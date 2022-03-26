@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+import '../models/transaction.dart';
 
 class FirebaseDatabaseService {
   FirebaseDatabaseService();
@@ -36,6 +39,12 @@ class FirebaseDatabaseService {
       "note": note,
       "categoryIndex": categoryIndex
     });
+
+    Fluttertoast.showToast(
+        msg: "Added successfully!",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM);
+
   }
 
   Future<void> getAllExpenses(User user) async {
@@ -49,11 +58,59 @@ class FirebaseDatabaseService {
     });
   }
 
+  Future<List<ExpenseTransaction>?> transactionFromSnapshot(User user) async {
+
+    try {
+      List<ExpenseTransaction> transactionList = [];
+
+      var querySnapshot =
+      await expenseCollection.doc(user.uid).collection("transaction").get();
+
+      // transactionList.add(ExpenseTransaction.fromJson(querySnapshot.docs[1].data()));
+
+      transactionList = querySnapshot.docs.map((e) => ExpenseTransaction.fromJson(e.data())).toList();
+
+      print("Contents of list");
+
+      transactionList.forEach((e) {
+        print(e.type);
+        print(e.day);
+        print(e.month);
+        print(e.note);
+        print(e.amount);
+        print(e.categoryindex);
+        print(e.type);
+
+        print("________________________________");
+
+      });
+
+      return transactionList;
+
+    } catch (err) {
+
+      print(err);
+
+    }
+
+  }
+
   Future<void> deleteExpense(User user) async {}
 
   Future<void> updateExpense(User user) async {}
 
-  Future<void> getSumOfExpenses(User user) async {}
+  Future<int> getIncomeSum(User user) async {
 
-  Future<void> getExpensesForMonth(User user) async {}
+    var querySnapshot =
+    await expenseCollection.doc(user.uid).collection("transaction").get();
+
+    return 5;
+
+  }
+
+  Future<void> getExpenseSum(User user) async {}
+
+  Future<void> getListExpensesOverallSum(User user) async {}
+
+  Future<void> getListExpensesForMonth(User user) async {}
 }

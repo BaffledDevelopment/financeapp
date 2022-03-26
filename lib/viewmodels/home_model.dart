@@ -1,20 +1,27 @@
-import 'package:finances/database/databaseimpl.dart';
+// import 'package:finances/database/databaseimpl.dart';
 import 'package:finances/services/auth_service.dart';
 import 'package:finances/services/database_service.dart';
+import 'package:finances/services/firebase_database_service.dart';
 import 'package:finances/services/icon_service.dart';
 import 'package:finances/viewmodels/base_model.dart';
+import 'package:finances/models/transaction.dart';
 
 import 'package:finances/enum_viewstate.dart';
 import 'package:finances/locator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeModel extends BaseModel {
+
+  final FirebaseDatabaseService _firebaseDatabaseService = locator<FirebaseDatabaseService>();
   final DataBaseService _dataBaseService = locator<DataBaseService>();
 
   final CategoryIconService _categoryIconService =
       locator<CategoryIconService>();
 
-  List<Transaction> transactions = List<Transaction>.empty();
+  final user = FirebaseAuth.instance.currentUser!;
+
+  List<ExpenseTransaction>? transactions = List<ExpenseTransaction>.empty();
   bool isCollapsed = false;
   late String appBarTitle;
   late String selectedYear;
@@ -82,7 +89,10 @@ class HomeModel extends BaseModel {
     setState(ViewState.Busy);
     notifyListeners();
 
-    transactions = await _dataBaseService.getAllTransactions(appBarTitle);
+    transactions = await _firebaseDatabaseService.transactionFromSnapshot(user);
+
+    // transactions = await _dataBaseService.getAllTransactions(appBarTitle);
+    // поменяй эту строчку на чтение из фаербейса
 
     setState(ViewState.Idle);
     notifyListeners();

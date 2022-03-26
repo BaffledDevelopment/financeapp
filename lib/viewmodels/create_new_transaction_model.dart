@@ -1,4 +1,5 @@
 import 'package:finances/viewmodels/base_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:finances/database/databaseimpl.dart';
 import 'package:finances/services/database_service.dart';
@@ -6,12 +7,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:moor_flutter/moor_flutter.dart';
 
 import '../locator.dart';
+import '../services/firebase_database_service.dart';
 
 class CreateNewTransactionModel extends BaseModel {
   TextEditingController memoController = TextEditingController();
   TextEditingController amountController = TextEditingController();
 
-  final DataBaseService _databaseService = locator<DataBaseService>();
+  final fdb_service = FirebaseDatabaseService();
+  final user = FirebaseAuth.instance.currentUser!;
 
   List months = [
     'Jan',
@@ -87,23 +90,23 @@ class CreateNewTransactionModel extends BaseModel {
       return;
     }
 
-    final newTransaction = TransactionsCompanion(
-        type: Value.ofNullable(type),
-        day: Value.ofNullable(selectedDay),
-        month: Value.ofNullable(selectedMonth),
-        memo: Value.ofNullable(memoController.text),
-        amount: Value.ofNullable(int.parse(amount)),
-        categoryindex: Value.ofNullable(categoryIndex));
-    // insert it!
-    await _databaseService.insertTransaction(newTransaction);
+    await fdb_service.addExpenses(
+        user: user,
+        type: type,
+        day: selectedDay.toString(),
+        month: selectedMonth.toString(),
+        amount: int.parse(amountController.text),
+        note: memoController.text,
+        categoryIndex: categoryIndex);
 
     Fluttertoast.showToast(
         msg: "Added successfully!",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM);
 
-    // return to the home
-    Navigator.of(context)
+    Navigator.of(context!)
         .pushNamedAndRemoveUntil('home', (Route<dynamic> route) => false);
+
+    // return to the home
   }
 }

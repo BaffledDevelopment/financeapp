@@ -15,6 +15,7 @@ import 'package:finances/ui/views/base_view.dart';
 import 'package:finances/ui/widgets/home_view_widgets/application_floactbut.dart';
 
 import '../../enum_viewstate.dart';
+import '../../models/transaction.dart';
 import '../../services/firebase_database_service.dart';
 import '../rounded_button.dart';
 
@@ -24,9 +25,12 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final user = FirebaseAuth.instance.currentUser!;
     final fdb_service = FirebaseDatabaseService();
+
     return BaseView<HomeModel>(
+
       onModelReady: (model) async => await model.init(),
       builder: (context, model, child) => Scaffold(
         appBar: buildAppBar(model!.appBarTitle, model),
@@ -43,15 +47,16 @@ class HomeView extends StatelessWidget {
                       Text(user.uid),
                       RoundedButton(
                           text: "Press me",
-                          press: () => fdb_service.addExpenses(
-                            type: "expense",
-                            user: user,
-                            note: 'Test',
-                            amount: 450,
-                            categoryIndex: 1,
-                            month: 'Jan',
-                            day: "Friday",
-                          )),
+                          press: () => fdb_service.transactionFromSnapshot(user)),
+                          // press: () => fdb_service.addExpenses(
+                          //   type: "expense",
+                          //   user: user,
+                          //   note: 'Test',
+                          //   amount: 450,
+                          //   categoryIndex: 1,
+                          //   month: 'Jan',
+                          //   day: "Friday",
+                          // )),
                       SummaryWidget(
                           income: model.incomeSum, expense: model.expenseSum),
                       buildList(model.transactions, model)
@@ -82,9 +87,24 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  buildList(List<Transaction> transactions, HomeModel model) {
-    return transactions.isEmpty
-        ? const NoTransactionsWidget()
-        : TransactionsListView(transactions, model);
+  buildList(List<ExpenseTransaction>? transactions, HomeModel model) {
+
+
+    print("INFO ABOUT TRANSACTIONINFO ABOUT TRANSACTIONINFO ABOUT TRANSACTIONINFO ABOUT TRANSACTIONINFO ABOUT TRANSACTIONINFO ABOUT TRANSACTIONINFO ABOUT TRANSACTIONINFO ABOUT TRANSACTION");
+    print(transactions);
+    print(transactions?.toList());
+    print(transactions?.toList());
+    print(transactions?.toList());
+    print(transactions.toString());
+
+
+    if (transactions != null) {
+      return TransactionsListView(transactions, model);
+    } else {
+      return const NoTransactionsWidget();
+    }
+    // return transactions.isEmpty
+    //     ? const NoTransactionsWidget()
+    //     : TransactionsListView(transactions, model);
   }
 }

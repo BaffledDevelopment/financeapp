@@ -2,8 +2,10 @@ import 'package:finances/database/databaseimpl.dart';
 import 'package:finances/viewmodels/home_model.dart';
 import 'package:flutter/material.dart';
 
+import '../../../models/transaction.dart';
+
 class TransactionsListView extends StatelessWidget {
-  final List<Transaction> transactions;
+  final List<ExpenseTransaction>? transactions;
   final HomeModel model;
 
   const TransactionsListView(
@@ -16,7 +18,7 @@ class TransactionsListView extends StatelessWidget {
     return Flexible(
       child: ListView(
         padding: EdgeInsets.all(8),
-        children: transactions.map((transaction) {
+        children: transactions!.map((transaction) {
           return Card(
             child: InkWell(
               onTap: () {
@@ -60,7 +62,7 @@ class TransactionsListView extends StatelessWidget {
                         child: model.getIconForCategory(
                             transaction.categoryindex, transaction.type),
                       ),
-                      title: Text(transaction.memo),
+                      title: Text(transaction.note),
                       trailing: Text(transaction.amount.toString(),
                           style: TextStyle(fontSize: 20)),
                     )

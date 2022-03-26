@@ -96,7 +96,27 @@ class SignupPage extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(5.0),
-                      child: RoundedButton(press: () {  }, text: '',),
+                      child: RoundedButton(  text: "Sign Up",
+                        press: () async {
+                          if (passwordController.text ==
+                              passwordConfirmController.text) {
+                            try {
+                              await model?.signUp(
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                  name: nameController.text,
+                                  context: context);
+                            } on FirebaseAuthException catch (e) {
+                              print(e);
+                            }
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "Something went wrong",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM);
+                          }
+                        },
+                      ),),
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.width * 0.1,

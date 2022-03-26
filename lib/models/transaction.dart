@@ -3,7 +3,7 @@ class ExpenseTransaction {
   late String day;
   late String month;
   late String note;
-  late int id;
+  late String id;
   late int amount;
   late int categoryindex;
 

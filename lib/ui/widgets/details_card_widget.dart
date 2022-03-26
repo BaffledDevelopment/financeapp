@@ -3,8 +3,10 @@ import 'package:finances/database/databaseimpl.dart';
 import 'package:finances/viewmodels/details_model.dart';
 import 'package:finances/ui/widgets/details_table_widget.dart';
 
+import '../../models/transaction.dart';
+
 class DetailsCard extends StatelessWidget {
-  final Transaction transaction;
+  final ExpenseTransaction transaction;
   final DetailsModel model;
 
   DetailsCard({required this.transaction, required this.model});

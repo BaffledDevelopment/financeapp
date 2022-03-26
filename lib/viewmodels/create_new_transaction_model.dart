@@ -32,7 +32,7 @@ class CreateNewTransactionModel extends BaseModel {
     'Dec'
   ];
 
-  int convertTimeStampToId = int.parse(Timestamp.now().seconds.toString());
+  String convertTimeStampToId = Timestamp.now().seconds.toString();
 
   late String selectedDay;
   late String selectedMonth;

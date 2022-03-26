@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:finances/database/databaseimpl.dart';
 import 'package:finances/viewmodels/edit_model.dart';
 
+import '../../models/transaction.dart';
 import 'base_view.dart';
 
 class EditView extends StatelessWidget {
-  final Transaction transaction;
+  final ExpenseTransaction transaction;
 
   EditView(this.transaction);
 

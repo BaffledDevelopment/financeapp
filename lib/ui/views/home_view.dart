@@ -26,9 +26,6 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final user = FirebaseAuth.instance.currentUser!;
-    final fdb_service = FirebaseDatabaseService();
-
     return BaseView<HomeModel>(
 
       onModelReady: (model) async => await model.init(),

@@ -1,4 +1,5 @@
 import 'package:finances/database/databaseimpl.dart';
+import 'package:finances/models/transaction.dart';
 import 'package:finances/ui/views/auth_view.dart';
 import 'package:finances/ui/views/create_new_transaction_view.dart';
 import 'package:finances/ui/views/details_view.dart';
@@ -37,12 +38,12 @@ class Router {
       case 'spline_chart':
         return MaterialPageRoute(builder: (_) => SplineChartView());
       case 'edit':
-        var transaction = settings.arguments as Transaction;
+        var transaction = settings.arguments as ExpenseTransaction;
         return MaterialPageRoute(builder: (_) => EditView(transaction));
       case 'home':
         return MaterialPageRoute(builder: (_) => HomeView());
       case 'details':
-        var transaction = settings.arguments as Transaction;
+        ExpenseTransaction transaction = settings.arguments as ExpenseTransaction;
         return MaterialPageRoute(builder: (_) => DetailsView(transaction));
       case 'registration':
         return MaterialPageRoute(builder: (_) => SignupPage());

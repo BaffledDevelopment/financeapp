@@ -1,4 +1,5 @@
 import 'package:finances/services/icon_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:finances/database/databaseimpl.dart';
@@ -7,12 +8,16 @@ import 'package:finances/viewmodels/base_model.dart';
 import 'package:moor/moor.dart';
 
 import '../locator.dart';
+import '../models/transaction.dart';
+import '../services/firebase_database_service.dart';
 
 class DetailsModel extends BaseModel {
   final CategoryIconService _categoryIconService =
       locator<CategoryIconService>();
 
-  final DataBaseService _databaseService = locator<DataBaseService>();
+  final FirebaseDatabaseService _firebaseDatabaseService = locator<FirebaseDatabaseService>();
+  final user = FirebaseAuth.instance.currentUser!;
+
 
   Icon getIconForCategory(int index, String type) {
     if (type == 'income') {
@@ -40,16 +45,8 @@ class DetailsModel extends BaseModel {
     }
   }
 
-  Future deleteTransacation(Transaction transaction) async {
-    final newTransaction = TransactionsCompanion(
-        type: Value.ofNullable(transaction.type),
-        day: Value.ofNullable(transaction.day),
-        month: Value.ofNullable(transaction.month),
-        memo: Value.ofNullable(transaction.memo),
-        amount: Value.ofNullable(transaction.amount),
-        categoryindex: Value.ofNullable(transaction.categoryindex));
-    // delet it!
+  Future<void> deleteTransacation(ExpenseTransaction transaction) async {
 
-    return await _databaseService.deleteTransaction(newTransaction);
+    return await _firebaseDatabaseService.deleteExpense(user, transaction);
   }
 }

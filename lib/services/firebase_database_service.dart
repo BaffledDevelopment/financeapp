@@ -31,7 +31,7 @@ class FirebaseDatabaseService {
     required int amount,
     required String note,
     required int categoryIndex,
-    required int id,
+    required String id,
   }) async {
     await expenseCollection.doc(user.uid).collection("transaction").add({
       "type": type,
@@ -40,8 +40,29 @@ class FirebaseDatabaseService {
       "amount": amount,
       "note": note,
       "categoryIndex": categoryIndex,
-      "id" : id,
+      "id": id,
     });
+
+    var getId = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection("transaction").
+    where("id", isEqualTo: id).get();
+
+
+    var transactionID = getId.docs[0].id;
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection("transaction")
+        .doc(transactionID)
+        .update({"id": transactionID})
+        .then((value) => print("New Transaction ID added!"))
+        .catchError((e) => print("Failed to change ID"));
+
+    print("****************");
+    print(transactionID);
 
     Fluttertoast.showToast(
         msg: "Added successfully!",
@@ -76,18 +97,18 @@ class FirebaseDatabaseService {
 
       print("Contents of list");
 
-      transactionList.forEach((e) {
-        print(e.type);
-        print(e.day);
-        print(e.month);
-        print(e.note);
-        print(e.amount);
-        print(e.categoryindex);
-        print(e.type);
-        print(e.id);
-
-        print("________________________________");
-      });
+      // transactionList.forEach((e) {
+      //   print(e.type);
+      //   print(e.day);
+      //   print(e.month);
+      //   print(e.note);
+      //   print(e.amount);
+      //   print(e.categoryindex);
+      //   print(e.type);
+      //   print(e.id);
+      //
+      //   print("________________________________");
+      // });
 
       return transactionList;
     } catch (err) {
@@ -95,9 +116,36 @@ class FirebaseDatabaseService {
     }
   }
 
-  Future<void> deleteExpense(User user) async {}
+  Future<void> deleteExpense(User user, ExpenseTransaction transaction) async {
+    print("___________________");
 
-  Future<void> updateExpense(User user) async {}
+    // print(transaction.id);
+    print(transaction.id);
+
+    await FirebaseFirestore.instance
+        .collection('orders')
+        .doc(user.uid)
+        .collection('transaction')
+        .doc(transaction.id)
+        .delete();
+  }
+
+  Future<void> updateExpense(User user, ExpenseTransaction transaction) async {
+    FirebaseFirestore.instance
+        .collection('orders')
+        .doc(user.uid)
+        .collection('transaction')
+        .doc(transaction.id)
+        .update({
+      'type': transaction.type,
+      'day': transaction.day,
+      'month': transaction.month,
+      'note': transaction.note,
+      'id': transaction.id,
+      'amount': transaction.amount,
+      'categoryIndex': transaction.categoryindex
+    });
+  }
 
   Future<int> getIncomeSum(User user) async {
     int incomeSum = 0;

@@ -9,6 +9,7 @@ import 'package:moor/moor.dart';
 // import 'package:toast/toast.dart';
 
 import '../../locator.dart';
+import '../models/transaction.dart';
 
 class EditModel extends BaseModel {
   TextEditingController memoController = TextEditingController();
@@ -71,7 +72,7 @@ class EditModel extends BaseModel {
     }
   }
 
-  void init(Transaction transaction) {
+  void init(ExpenseTransaction transaction) {
     // initla values are current day and month
     selectedMonth = transaction.month;
     selectedDay = transaction.day;
@@ -82,12 +83,13 @@ class EditModel extends BaseModel {
       category =
           _categoryIconService.expenseList.elementAt(transaction.categoryindex);
     }
-    memoController.text = transaction.memo;
+    memoController.text = transaction.note;
     amountController.text = transaction.amount.toString();
     notifyListeners();
   }
 
   editTransaction(context, transaction) async {
+
     String memo = memoController.text;
     String amount = amountController.text;
 
@@ -98,6 +100,8 @@ class EditModel extends BaseModel {
           gravity: ToastGravity.BOTTOM);
       return;
     }
+
+
 
     final newTransaction = TransactionsCompanion(
         type: Value.ofNullable(transaction.type),

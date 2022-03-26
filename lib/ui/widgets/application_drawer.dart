@@ -1,10 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../rounded_button.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer(
-      BuildContext context, {
-        Key? key,
-      }) : super(key: key);
+    BuildContext context, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,6 @@ class AppDrawer extends StatelessWidget {
               Navigator.of(context).pushNamed("chart");
             },
           ),
-
           const Divider(
             thickness: 1,
           ),
@@ -41,6 +43,13 @@ class AppDrawer extends StatelessWidget {
               Navigator.of(context).pushNamed("spline_chart");
             },
           ),
+          RoundedButton(
+            text: 'Log Out',
+            press: () async{
+              FirebaseAuth.instance.signOut();
+              Navigator.of(context).pushNamed("auth");
+            },
+          )
         ],
       ),
     );

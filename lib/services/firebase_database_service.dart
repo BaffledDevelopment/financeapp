@@ -9,14 +9,45 @@ class FirebaseDatabaseService {
   final CollectionReference expenseCollection =
   FirebaseFirestore.instance.collection('users');
 
-  Future<void> updateExpenses() async {}
+  Future<void> updateExpenses(String type,
+      String day,
+      String month,
+      int amount,
+      String note,
+      int categoryIndex,) async {
+    // Todo FILL THIS
+  }
 
-  Future<void> addExpenses() async {}
+  Future<void> addExpenses({
+    required User user,
+    required String type,
+    required String day,
+    required String month,
+    required int amount,
+    required String note,
+    required int categoryIndex,}) async {
+    await expenseCollection.doc(user.uid).collection("transaction").add({
+      "type": type,
+      "day": day,
+      "month": month,
+      "amount": amount,
+      "note": note,
+      "categoryIndex": categoryIndex
+    });
+  }
 
+  Future<void> getExpenses(User user) async {    var userDoc =
+  await expenseCollection.where('email', isEqualTo: user.email).get();
 
-  Future<void> getExpenses(User user) async {}
+  // var users = expenseCollection.doc(user.uid).collection("").where('email', isEqualTo: user.email).get();
 
-  Future<void> deleteExpense(User user) async {}
+  userDoc.docs.forEach((element) {
+    print(element.data());
+  });}
+
+  Future<void> deleteExpense(User user) async {
+
+  }
 
   Future<void> updateExpense(User user) async {}
 

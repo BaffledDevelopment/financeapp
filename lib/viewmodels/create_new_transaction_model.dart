@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finances/viewmodels/base_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -31,8 +32,12 @@ class CreateNewTransactionModel extends BaseModel {
     'Dec'
   ];
 
+  int convertTimeStampToId = int.parse(Timestamp.now().seconds.toString());
+
   late String selectedDay;
   late String selectedMonth;
+  // Timestamp timestamp = Timestamp.now();
+
   DateTime selectedDate = DateTime.now();
   late String type;
   late int categoryIndex;
@@ -97,7 +102,9 @@ class CreateNewTransactionModel extends BaseModel {
         month: selectedMonth.toString(),
         amount: int.parse(amountController.text),
         note: memoController.text,
-        categoryIndex: categoryIndex);
+        categoryIndex: categoryIndex,
+        id: convertTimeStampToId,
+    );
 
     Fluttertoast.showToast(
         msg: "Added successfully!",

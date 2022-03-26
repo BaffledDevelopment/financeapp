@@ -18,6 +18,7 @@ class FirebaseDatabaseService {
     int amount,
     String note,
     int categoryIndex,
+    int id,
   ) async {
     // Todo FILL THIS
   }
@@ -30,6 +31,7 @@ class FirebaseDatabaseService {
     required int amount,
     required String note,
     required int categoryIndex,
+    required int id,
   }) async {
     await expenseCollection.doc(user.uid).collection("transaction").add({
       "type": type,
@@ -37,38 +39,40 @@ class FirebaseDatabaseService {
       "month": month,
       "amount": amount,
       "note": note,
-      "categoryIndex": categoryIndex
+      "categoryIndex": categoryIndex,
+      "id" : id,
     });
 
     Fluttertoast.showToast(
         msg: "Added successfully!",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM);
-
   }
 
   Future<void> getAllExpenses(User user) async {
-    var userDoc =
-        await expenseCollection.where('email', isEqualTo: user.email).get();
+    // var userDoc =
+    //     await expenseCollection.where('email', isEqualTo: user.email).get();
 
     // var users = expenseCollection.doc(user.uid).collection("").where('email', isEqualTo: user.email).get();
 
-    userDoc.docs.forEach((element) {
-      print(element.data());
-    });
+    // userDoc.docs.forEach((element) {
+    //   print(element.data());
+    // });
   }
 
-  Future<List<ExpenseTransaction>?> transactionFromSnapshot(User user) async {
-
+  Future<List<ExpenseTransaction>?> transactionListFromSnapshot(
+      User user) async {
     try {
       List<ExpenseTransaction> transactionList = [];
 
       var querySnapshot =
-      await expenseCollection.doc(user.uid).collection("transaction").get();
+          await expenseCollection.doc(user.uid).collection("transaction").get();
 
       // transactionList.add(ExpenseTransaction.fromJson(querySnapshot.docs[1].data()));
 
-      transactionList = querySnapshot.docs.map((e) => ExpenseTransaction.fromJson(e.data())).toList();
+      transactionList = querySnapshot.docs
+          .map((e) => ExpenseTransaction.fromJson(e.data()))
+          .toList();
 
       print("Contents of list");
 
@@ -80,19 +84,15 @@ class FirebaseDatabaseService {
         print(e.amount);
         print(e.categoryindex);
         print(e.type);
+        print(e.id);
 
         print("________________________________");
-
       });
 
       return transactionList;
-
     } catch (err) {
-
       print(err);
-
     }
-
   }
 
   Future<void> deleteExpense(User user) async {}
@@ -100,17 +100,68 @@ class FirebaseDatabaseService {
   Future<void> updateExpense(User user) async {}
 
   Future<int> getIncomeSum(User user) async {
+    int incomeSum = 0;
 
     var querySnapshot =
-    await expenseCollection.doc(user.uid).collection("transaction").get();
+        await expenseCollection.doc(user.uid).collection("transaction").get();
 
-    return 5;
+    List<ExpenseTransaction> transactionList = [];
 
+    transactionList = querySnapshot.docs
+        .map((e) => ExpenseTransaction.fromJson(e.data()))
+        .toList();
+
+    transactionList.forEach((e) {
+      if (e.type == "income") {
+        incomeSum = incomeSum + e.amount;
+      }
+    });
+
+    return incomeSum;
   }
 
-  Future<void> getExpenseSum(User user) async {}
+  Future<int> getExpenseSum(User user) async {
+    int expenseSum = 0;
 
-  Future<void> getListExpensesOverallSum(User user) async {}
+    var querySnapshot =
+        await expenseCollection.doc(user.uid).collection("transaction").get();
+
+    List<ExpenseTransaction> transactionList = [];
+
+    transactionList = querySnapshot.docs
+        .map((e) => ExpenseTransaction.fromJson(e.data()))
+        .toList();
+
+    transactionList.forEach((e) {
+      if (e.type == "expense") {
+        expenseSum = expenseSum + e.amount;
+      }
+    });
+    return expenseSum;
+  }
+
+  Future<int> getListExpensesOverallSum(User user) async {
+    int overallSum = 0;
+
+    var querySnapshot =
+        await expenseCollection.doc(user.uid).collection("transaction").get();
+
+    List<ExpenseTransaction> transactionList = [];
+
+    transactionList = querySnapshot.docs
+        .map((e) => ExpenseTransaction.fromJson(e.data()))
+        .toList();
+
+    transactionList.forEach((e) {
+      if (e.type == "expense") {
+        overallSum = overallSum - e.amount;
+      } else if (e.type == "income") {
+        overallSum = overallSum + e.amount;
+      }
+    });
+
+    return overallSum;
+  }
 
   Future<void> getListExpensesForMonth(User user) async {}
 }

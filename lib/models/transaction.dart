@@ -22,7 +22,7 @@ class ExpenseTransaction {
     'day': day,
     'month': month,
     'note': note,
-    // 'id': id,
+    'id': id,
     'amount': amount,
     'categoryIndex': categoryindex};
 
@@ -31,7 +31,7 @@ class ExpenseTransaction {
         day = json['day'],
         month = json['month'],
         note = json['note'],
-        // id = json['id'],
+        id = json['id'],
         amount = json['amount'],
         categoryindex = json['categoryIndex'];
 

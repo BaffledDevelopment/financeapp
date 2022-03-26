@@ -43,20 +43,13 @@ class HomeView extends StatelessWidget {
                 children: <Widget>[
                   Column(
                     children: <Widget>[
-                      Text(user.email!),
-                      Text(user.uid),
-                      RoundedButton(
-                          text: "Press me",
-                          press: () => fdb_service.transactionFromSnapshot(user)),
-                          // press: () => fdb_service.addExpenses(
-                          //   type: "expense",
-                          //   user: user,
-                          //   note: 'Test',
-                          //   amount: 450,
-                          //   categoryIndex: 1,
-                          //   month: 'Jan',
-                          //   day: "Friday",
-                          // )),
+                      // Text(user.email!),
+                      // Text(user.uid),
+                      // RoundedButton(
+                      //     text: "Press me",
+                      //     press: () => fdb_service.transactionListFromSnapshot(user)
+                      // ),
+
                       SummaryWidget(
                           income: model.incomeSum, expense: model.expenseSum),
                       buildList(model.transactions, model)

@@ -1,4 +1,6 @@
 // import 'package:finances/database/databaseimpl.dart';
+import 'dart:math';
+
 import 'package:finances/services/auth_service.dart';
 import 'package:finances/services/database_service.dart';
 import 'package:finances/services/firebase_database_service.dart';
@@ -14,7 +16,6 @@ import 'package:flutter/material.dart';
 class HomeModel extends BaseModel {
 
   final FirebaseDatabaseService _firebaseDatabaseService = locator<FirebaseDatabaseService>();
-  final DataBaseService _dataBaseService = locator<DataBaseService>();
 
   final CategoryIconService _categoryIconService =
       locator<CategoryIconService>();
@@ -50,8 +51,12 @@ class HomeModel extends BaseModel {
 
     appBarTitle = clickedMonth;
 
-    expenseSum = await _dataBaseService.getExpenseSum(appBarTitle);
-    incomeSum = await _dataBaseService.getIncomeSum(appBarTitle);
+
+    expenseSum = await _firebaseDatabaseService.getExpenseSum(user);
+    incomeSum = await _firebaseDatabaseService.getIncomeSum(user);
+
+    // expenseSum = await _dataBaseService.getExpenseSum(appBarTitle);
+    // incomeSum = await _dataBaseService.getIncomeSum(appBarTitle);
 
     titleClicked();
   }
@@ -80,8 +85,11 @@ class HomeModel extends BaseModel {
     selectedMonthIndex = DateTime.now().month - 1;
     appBarTitle = months[DateTime.now().month - 1];
 
-    expenseSum = await _dataBaseService.getExpenseSum(appBarTitle);
-    incomeSum = await _dataBaseService.getIncomeSum(appBarTitle);
+    expenseSum = await _firebaseDatabaseService.getExpenseSum(user);
+    incomeSum = await _firebaseDatabaseService.getIncomeSum(user);
+
+    // expenseSum = await _dataBaseService.getExpenseSum(appBarTitle);
+    // incomeSum = await _dataBaseService.getIncomeSum(appBarTitle);
 
     print("Expense : $expenseSum");
     print("Income : $incomeSum");
@@ -89,7 +97,7 @@ class HomeModel extends BaseModel {
     setState(ViewState.Busy);
     notifyListeners();
 
-    transactions = await _firebaseDatabaseService.transactionFromSnapshot(user);
+    transactions = await _firebaseDatabaseService.transactionListFromSnapshot(user);
 
     // transactions = await _dataBaseService.getAllTransactions(appBarTitle);
     // поменяй эту строчку на чтение из фаербейса

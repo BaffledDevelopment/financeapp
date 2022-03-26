@@ -117,7 +117,7 @@ class SignupPage extends StatelessWidget {
                           }
                         },
                       ),),
-                    ),
+
                     SizedBox(
                       height: MediaQuery.of(context).size.width * 0.1,
                     ),

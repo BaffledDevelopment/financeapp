@@ -1,18 +1,42 @@
-class Transaction {
-  final String type;
-  final String day;
-  final String month;
-  final String memo;
-  final int id;
-  final int amount;
-  final int categoryindex;
+class ExpenseTransaction {
+  late String type;
+  late String day;
+  late String month;
+  late String note;
+  late int id;
+  late int amount;
+  late int categoryindex;
 
-  Transaction(
-      {required this.type,
-      required this.day,
-      required this.month,
-      required this.memo,
-      required this.id,
-      required this.amount,
-      required this.categoryindex});
+  ExpenseTransaction(
+      // this.type,
+      // this.day,
+      // this.month,
+      // this.memo,
+      // this.id,
+      // this.amount,
+      // this.categoryindex
+      );
+
+  Map<String, dynamic> toJson() => {
+    'type': type,
+    'day': day,
+    'month': month,
+    'note': note,
+    // 'id': id,
+    'amount': amount,
+    'categoryIndex': categoryindex};
+
+  ExpenseTransaction.fromJson(Map<String, dynamic> json) :
+        type = json['type'],
+        day = json['day'],
+        month = json['month'],
+        note = json['note'],
+        // id = json['id'],
+        amount = json['amount'],
+        categoryindex = json['categoryIndex'];
+
+
+
+
 }
+

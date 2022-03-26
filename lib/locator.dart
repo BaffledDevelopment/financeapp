@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finances/services/database_service.dart';
+import 'package:finances/services/firebase_database_service.dart';
 import 'package:finances/services/icon_service.dart';
 import 'package:finances/services/sharedpreferences_service.dart';
 import 'package:finances/viewmodels/auth_model.dart';
@@ -25,6 +27,7 @@ void setupLocator() {
   // locator.registerLazySingleton(() => SharedPrefrencesService());
   locator.registerLazySingleton(() => AuthenticationService());
   locator.registerLazySingleton(() => DataBaseService());
+  locator.registerLazySingleton(() => FirebaseDatabaseService());
 
   //VIEWMODELS
   locator.registerFactory(() => HomeModel());

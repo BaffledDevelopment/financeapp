@@ -1,7 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:finances/ui/views/base_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
+
+import '../../viewmodels/piechart_model.dart';
+import '../widgets/new_transaction_view_widget/transaction_income_expense_slider.dart';
+import '../widgets/rebuild_pie_chart_widget.dart';
 
 class StatisticsExpense extends StatefulWidget {
   @override
@@ -36,16 +41,19 @@ class _StatisticsExpenseState extends State<StatisticsExpense> {
     14: "Pet",
   };
 
+  Map<String, double> incomeMap = {};
+  Map<String, double> expenseMap = {};
+
+  int selectedItem = 1;
+
   final user = FirebaseAuth.instance.currentUser!;
   int key = 0;
 
   late List<Expense> _expense = [];
 
-  bool isIncome = true;
-
   Map<String, double> getcategoryIndexData() {
-    Map<String, double> incomeMap = {};
-    Map<String, double> expenseMap = {};
+    incomeMap = {};
+    expenseMap = {};
 
     for (var item in _expense) {
       print(item.categoryIndex);
@@ -66,15 +74,13 @@ class _StatisticsExpenseState extends State<StatisticsExpense> {
           // в мапе incomeMap Map<String, double> хранится количество вхождений операций одного типа
           // для отрисовки сегментов piechart (принимают только Map<String, double>)
           // categoryIndex -> конверт в инт -> тянем название операции из справочной мапы
-          // -> готов ключ для incomeMap,
+          // -> готов ключ для incomeMap и по нему тягаем циферьку :)
+
           incomeMap[incomeCategories[int.parse(item.categoryIndex)]
               .toString()] = incomeMap[
                   incomeCategories[int.parse(item.categoryIndex)].toString()]! +
               1;
         }
-
-        print("Income map entries");
-
       } else if (item.type == "expense") {
         if (expenseMap.containsKey(
                 expenseCategories[int.parse(item.categoryIndex)].toString()) ==
@@ -82,17 +88,27 @@ class _StatisticsExpenseState extends State<StatisticsExpense> {
           expenseMap[
               expenseCategories[int.parse(item.categoryIndex)].toString()] = 1;
         } else {
-          expenseMap[expenseCategories[int.parse(item.categoryIndex)]
-              .toString()] = expenseMap[
-          expenseCategories[int.parse(item.categoryIndex)].toString()]! +
-              1;
+          expenseMap[
+                  expenseCategories[int.parse(item.categoryIndex)].toString()] =
+              expenseMap[expenseCategories[int.parse(item.categoryIndex)]
+                      .toString()]! +
+                  1;
         }
-
-        print("Expense map entries");
-        print(expenseMap.entries);
       }
     }
-    return incomeMap;
+
+    print("Income map entries");
+    print(incomeMap.entries);
+
+    print("Expense map entries");
+    print(expenseMap.entries);
+
+    if (selectedItem == 1) {
+      return incomeMap;
+    } else {
+      return expenseMap;
+    }
+
     // test[item.categoryIndex] = test[item.categoryIndex]! + 1;
   }
 
@@ -137,6 +153,7 @@ class _StatisticsExpenseState extends State<StatisticsExpense> {
   }
 
   @override
+
   Widget build(BuildContext context) {
     final Stream<QuerySnapshot> expStream = FirebaseFirestore.instance
         .collection('users')
@@ -160,36 +177,51 @@ class _StatisticsExpenseState extends State<StatisticsExpense> {
       }
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Icon(Icons.menu),
-        backgroundColor: Colors.cyan,
-        elevation: 0.0,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 50,
-            ),
-            StreamBuilder<Object>(
-              stream: expStream,
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return Text("something went wrong");
-                }
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
-                }
-                final data = snapshot.requireData;
-                print("Data: $data");
-                getExpfromSanapshot(data);
-                return pieChartExampleOne();
-              },
-            ),
-          ],
+    return BaseView<PieChartModel>(
+      builder: (context, model, child) => Scaffold(
+        appBar: AppBar(
+          title: TransactionTypeSpinnerPieChart(
+              model!.selectedItem, model.changeSelectedItem),
+          backgroundColor: Colors.cyan,
+          elevation: 0.0,
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 50,
+              ),
+              StreamBuilder<Object>(
+                stream: expStream,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return const Text("something went wrong");
+                  }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  }
+
+                  final data = snapshot.requireData;
+                  print("Data: $data");
+                  getExpfromSanapshot(data);
+
+                  if (model.selectedItem == 2) {
+
+                    selectedItem = model.selectedItem;
+
+                    return pieChartExampleOne();
+                  } else {
+
+                    selectedItem = model.selectedItem;
+
+                    return pieChartExampleOne();
+                  }
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class TransactionTypeSpinner extends StatelessWidget {
+class TransactionTypeSpinnerPieChart extends StatelessWidget {
   final selectedItem;
   final Function changedSelectedItem;
 
-  const TransactionTypeSpinner(this.selectedItem, this.changedSelectedItem);
+  const TransactionTypeSpinnerPieChart(this.selectedItem, this.changedSelectedItem);
 
   @override
   Widget build(BuildContext context) {

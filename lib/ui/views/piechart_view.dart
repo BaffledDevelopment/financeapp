@@ -9,25 +9,91 @@ class StatisticsExpense extends StatefulWidget {
 }
 
 class _StatisticsExpenseState extends State<StatisticsExpense> {
+  Map<int, String> incomeCategories = {
+    0: "Salary",
+    1: "Awards",
+    2: "Grants",
+    3: "Rental",
+    4: "Investment",
+    5: "Lottery",
+  };
+
+  Map<int, String> expenseCategories = {
+    0: "Food",
+    1: "Bills",
+    2: "Transportaion",
+    3: "Home",
+    4: "Entertainment",
+    5: "Shopping",
+    6: "Clothing",
+    7: "Insurance",
+    8: "Telephone",
+    9: "Health",
+    10: "Sport",
+    11: "Beauty",
+    12: "Education",
+    13: "Gift",
+    14: "Pet",
+  };
 
   final user = FirebaseAuth.instance.currentUser!;
   int key = 0;
 
   late List<Expense> _expense = [];
 
+  bool isIncome = true;
+
   Map<String, double> getcategoryIndexData() {
-    Map<String, double> catMap = {};
+    Map<String, double> incomeMap = {};
+    Map<String, double> expenseMap = {};
+
     for (var item in _expense) {
       print(item.categoryIndex);
-      if (catMap.containsKey(item.categoryIndex.toString()) == false) {
-        catMap[item.categoryIndex.toString()] = 1;
-      } else {
-        catMap.update(item.categoryIndex.toString(), (int) => catMap[item.categoryIndex.toString()]! + 1);
-        // test[item.categoryIndex] = test[item.categoryIndex]! + 1;
+
+      if (item.type == "income") {
+        if (incomeMap
+                .containsKey(incomeCategories[int.parse(item.categoryIndex)]) ==
+            false) {
+          incomeMap[
+              incomeCategories[int.parse(item.categoryIndex)].toString()] = 1;
+        } else {
+          print("ENTRIES________ENTRIES");
+          print(incomeMap.entries);
+
+          // в фаербейзе categoryIndex записан как Integer
+          // в item оно вынужденно конвертируется в String из-за сериализации в Map<String, dynamic>
+          // в справочной мапе incomeCategories Map<int, String> хранятся строки с пояснениями к индексу операции
+          // в мапе incomeMap Map<String, double> хранится количество вхождений операций одного типа
+          // для отрисовки сегментов piechart (принимают только Map<String, double>)
+          // categoryIndex -> конверт в инт -> тянем название операции из справочной мапы
+          // -> готов ключ для incomeMap,
+          incomeMap[incomeCategories[int.parse(item.categoryIndex)]
+              .toString()] = incomeMap[
+                  incomeCategories[int.parse(item.categoryIndex)].toString()]! +
+              1;
+        }
+
+        print("Income map entries");
+
+      } else if (item.type == "expense") {
+        if (expenseMap.containsKey(
+                expenseCategories[int.parse(item.categoryIndex)].toString()) ==
+            false) {
+          expenseMap[
+              expenseCategories[int.parse(item.categoryIndex)].toString()] = 1;
+        } else {
+          expenseMap[expenseCategories[int.parse(item.categoryIndex)]
+              .toString()] = expenseMap[
+          expenseCategories[int.parse(item.categoryIndex)].toString()]! +
+              1;
+        }
+
+        print("Expense map entries");
+        print(expenseMap.entries);
       }
-      print(catMap);
     }
-    return catMap;
+    return incomeMap;
+    // test[item.categoryIndex] = test[item.categoryIndex]! + 1;
   }
 
   List<Color> colorList = [
@@ -56,7 +122,7 @@ class _StatisticsExpenseState extends State<StatisticsExpense> {
           showChartValueBackground: true,
           showChartValues: true,
           chartValueStyle:
-          TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
+              TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
       centerText: _expense[0].type.toString(),
       legendOptions: const LegendOptions(
           showLegendsInRow: false,
@@ -72,8 +138,11 @@ class _StatisticsExpenseState extends State<StatisticsExpense> {
 
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> expStream =
-    FirebaseFirestore.instance.collection('users').doc(user.uid).collection("transaction").snapshots();
+    final Stream<QuerySnapshot> expStream = FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection("transaction")
+        .snapshots();
 
     void getExpfromSanapshot(snapshot) {
       if (snapshot.docs.isNotEmpty) {
@@ -84,10 +153,7 @@ class _StatisticsExpenseState extends State<StatisticsExpense> {
           print(a.data());
           print("this was a.data()");
 
-
-
           Expense exp = Expense.fromJson(a.data());
-
           _expense.add(exp);
           print(exp);
         }
@@ -135,11 +201,11 @@ class Expense {
   String categoryIndex;
   String type;
 
-  Expense(
-      {required this.amount,
-        required this.categoryIndex,
-        required this.type,
-        });
+  Expense({
+    required this.amount,
+    required this.categoryIndex,
+    required this.type,
+  });
 
   factory Expense.fromJson(Map<String, dynamic> json) {
     return Expense(

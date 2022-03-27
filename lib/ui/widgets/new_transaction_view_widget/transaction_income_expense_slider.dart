@@ -10,7 +10,7 @@ class TransactionTypeSpinner extends StatelessWidget {
   Widget build(BuildContext context) {
     return DropdownButton(
         value: selectedItem,
-        items: [
+        items: const [
           DropdownMenuItem(
             child: Text("Income"),
             value: 1,

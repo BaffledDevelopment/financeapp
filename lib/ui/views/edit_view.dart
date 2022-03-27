@@ -19,6 +19,7 @@ class EditView extends StatelessWidget {
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           title: const Text('Edit'),
+            backgroundColor: Colors.cyan
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),

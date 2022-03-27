@@ -41,6 +41,7 @@ class DetailsView extends StatelessWidget {
                       ),
                     ],
                   ),
+                  backgroundColor: Colors.cyan,
                 ),
                 body: Stack(
                   children: <Widget>[

@@ -10,7 +10,6 @@ class CreateNewTransactionView extends StatelessWidget {
   final Category category;
   final int selectedCategory;
 
-
   CreateNewTransactionView(this.category, this.selectedCategory);
 
   @override
@@ -23,7 +22,9 @@ class CreateNewTransactionView extends StatelessWidget {
           title: selectedCategory == 1
               ? const Text('Income')
               : const Text('Expense'),
+          backgroundColor: const Color.fromARGB(255, 255, 241, 159),
         ),
+
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(16.0),

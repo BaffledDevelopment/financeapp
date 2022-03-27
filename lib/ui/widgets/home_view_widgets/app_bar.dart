@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 class MyAppBar extends StatelessWidget {
   final HomeModel? model;
   final String? title;
+  // final Color? backgroundColor;
 
-  const MyAppBar({Key? key, this.model, this.title}) : super(key: key);
+  MyAppBar({Key? key, this.model, this.title,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     return InkWell(
+
       onTap: () {
         // model?.titleClicked();
         Navigator.of(context).pushNamed("select");

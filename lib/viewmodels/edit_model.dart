@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:finances/database/databaseimpl.dart';
 import 'package:finances/models/category.dart';
@@ -10,12 +11,14 @@ import 'package:moor/moor.dart';
 
 import '../../locator.dart';
 import '../models/transaction.dart';
+import '../services/firebase_database_service.dart';
 
 class EditModel extends BaseModel {
   TextEditingController memoController = TextEditingController();
   TextEditingController amountController = TextEditingController();
 
-  final DataBaseService _dataBaseService = locator<DataBaseService>();
+  final FirebaseDatabaseService _firebaseDatabaseService = locator<FirebaseDatabaseService>();
+  final user = FirebaseAuth.instance.currentUser!;
 
   final CategoryIconService _categoryIconService =
       locator<CategoryIconService>();
@@ -90,28 +93,18 @@ class EditModel extends BaseModel {
 
   editTransaction(context, transaction) async {
 
-    String memo = memoController.text;
+    String note = memoController.text;
     String amount = amountController.text;
 
-    if (memo.isEmpty || amount.isEmpty) {
+    if (note.isEmpty || amount.isEmpty) {
       Fluttertoast.showToast(
           msg: "Please fill all the fields!",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM);
       return;
     }
-
-
-
-    final newTransaction = TransactionsCompanion(
-        type: Value.ofNullable(transaction.type),
-        day: Value.ofNullable(transaction.day),
-        month: Value.ofNullable(transaction.month),
-        memo: Value.ofNullable(transaction.memo),
-        amount: Value.ofNullable(transaction.amount),
-        categoryindex: Value.ofNullable(transaction.categoryindex));
-    // insert it!
-    await _dataBaseService.updateTransaction(newTransaction);
+    
+    await _firebaseDatabaseService.updateExpense(user, transaction, note, int.parse(amount));
 
     Fluttertoast.showToast(
         msg: "Edited successfully!",
@@ -121,6 +114,6 @@ class EditModel extends BaseModel {
 
     Navigator.of(context).pushNamedAndRemoveUntil(
         'details', (Route<dynamic> route) => false,
-        arguments: newTransaction);
+        arguments: transaction);
   }
 }

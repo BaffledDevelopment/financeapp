@@ -74,6 +74,7 @@ class HomeView extends StatelessWidget {
         title: title,
         model: model,
       ),
+        backgroundColor: Colors.cyan
     );
   }
 

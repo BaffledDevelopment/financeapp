@@ -58,12 +58,51 @@ class _StatisticsExpenseState extends State<StatisticsExpense> {
     for (var item in _expense) {
       print(item.categoryIndex);
 
+      // plot charts by amount, not by count of expenses of certain type
+
+      // if (item.type == "income") {
+      //   if (incomeMap
+      //           .containsKey(incomeCategories[int.parse(item.categoryIndex)]) ==
+      //       false) {
+      //     incomeMap[
+      //         incomeCategories[int.parse(item.categoryIndex)].toString()] = 1;
+      //   } else {
+      //     print("ENTRIES________ENTRIES");
+      //     print(incomeMap.entries);
+      //
+      //     // в фаербейзе categoryIndex записан как Integer
+      //     // в item оно вынужденно конвертируется в String из-за сериализации в Map<String, dynamic>
+      //     // в справочной мапе incomeCategories Map<int, String> хранятся строки с пояснениями к индексу операции
+      //     // в мапе incomeMap Map<String, double> хранится количество вхождений операций одного типа
+      //     // для отрисовки сегментов piechart (принимают только Map<String, double>)
+      //     // categoryIndex -> конверт в инт -> тянем название операции из справочной мапы
+      //     // -> готов ключ для incomeMap и по нему тягаем циферьку :)
+      //
+      //     incomeMap[incomeCategories[int.parse(item.categoryIndex)]
+      //         .toString()] = incomeMap[
+      //             incomeCategories[int.parse(item.categoryIndex)].toString()]! +
+      //         1;
+      //   }
+      // } else if (item.type == "expense") {
+      //   if (expenseMap.containsKey(
+      //           expenseCategories[int.parse(item.categoryIndex)].toString()) ==
+      //       false) {
+      //     expenseMap[
+      //         expenseCategories[int.parse(item.categoryIndex)].toString()] = 1;
+      //   } else {
+      //     expenseMap[
+      //             expenseCategories[int.parse(item.categoryIndex)].toString()] =
+      //         expenseMap[expenseCategories[int.parse(item.categoryIndex)]
+      //                 .toString()]! +
+      //             1;
+      //   }
+      // }
       if (item.type == "income") {
         if (incomeMap
-                .containsKey(incomeCategories[int.parse(item.categoryIndex)]) ==
+            .containsKey(incomeCategories[int.parse(item.categoryIndex)]) ==
             false) {
           incomeMap[
-              incomeCategories[int.parse(item.categoryIndex)].toString()] = 1;
+          incomeCategories[int.parse(item.categoryIndex)].toString()] = (double.parse(item.amount.toString()));
         } else {
           print("ENTRIES________ENTRIES");
           print(incomeMap.entries);
@@ -78,21 +117,21 @@ class _StatisticsExpenseState extends State<StatisticsExpense> {
 
           incomeMap[incomeCategories[int.parse(item.categoryIndex)]
               .toString()] = incomeMap[
-                  incomeCategories[int.parse(item.categoryIndex)].toString()]! +
-              1;
+          incomeCategories[int.parse(item.categoryIndex)].toString()]! +
+              (double.parse(item.amount.toString()));
         }
       } else if (item.type == "expense") {
         if (expenseMap.containsKey(
-                expenseCategories[int.parse(item.categoryIndex)].toString()) ==
+            expenseCategories[int.parse(item.categoryIndex)].toString()) ==
             false) {
           expenseMap[
-              expenseCategories[int.parse(item.categoryIndex)].toString()] = 1;
+          expenseCategories[int.parse(item.categoryIndex)].toString()] = (double.parse(item.amount.toString()));
         } else {
           expenseMap[
-                  expenseCategories[int.parse(item.categoryIndex)].toString()] =
+          expenseCategories[int.parse(item.categoryIndex)].toString()] =
               expenseMap[expenseCategories[int.parse(item.categoryIndex)]
-                      .toString()]! +
-                  1;
+                  .toString()]! +
+                  (double.parse(item.amount.toString()));
         }
       }
     }
@@ -108,8 +147,6 @@ class _StatisticsExpenseState extends State<StatisticsExpense> {
     } else {
       return expenseMap;
     }
-
-    // test[item.categoryIndex] = test[item.categoryIndex]! + 1;
   }
 
   List<Color> colorList = [
@@ -153,7 +190,6 @@ class _StatisticsExpenseState extends State<StatisticsExpense> {
   }
 
   @override
-
   Widget build(BuildContext context) {
     final Stream<QuerySnapshot> expStream = FirebaseFirestore.instance
         .collection('users')

@@ -11,18 +11,6 @@ class FirebaseDatabaseService {
   final CollectionReference expenseCollection =
       FirebaseFirestore.instance.collection('users');
 
-  Future<void> updateExpenses(
-    String type,
-    String day,
-    String month,
-    int amount,
-    String note,
-    int categoryIndex,
-    int id,
-  ) async {
-    // Todo FILL THIS
-  }
-
   Future<void> addExpenses({
     required User user,
     required String type,
@@ -123,16 +111,16 @@ class FirebaseDatabaseService {
     print(transaction.id);
 
     await FirebaseFirestore.instance
-        .collection('orders')
+        .collection('users')
         .doc(user.uid)
         .collection('transaction')
         .doc(transaction.id)
         .delete();
   }
 
-  Future<void> updateExpense(User user, ExpenseTransaction transaction) async {
+  Future<void> updateExpense(User user, ExpenseTransaction transaction, String note, int amount) async {
     FirebaseFirestore.instance
-        .collection('orders')
+        .collection('users')
         .doc(user.uid)
         .collection('transaction')
         .doc(transaction.id)
@@ -140,9 +128,9 @@ class FirebaseDatabaseService {
       'type': transaction.type,
       'day': transaction.day,
       'month': transaction.month,
-      'note': transaction.note,
+      'note': note,
       'id': transaction.id,
-      'amount': transaction.amount,
+      'amount': amount,
       'categoryIndex': transaction.categoryindex
     });
   }

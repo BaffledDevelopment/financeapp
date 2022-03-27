@@ -32,7 +32,7 @@ class Router {
       case 'new_transaction':
         return MaterialPageRoute(builder: (_) => NewTransactionView());
       case 'chart':
-        return MaterialPageRoute(builder: (_) => PieChartView());
+        return MaterialPageRoute(builder: (_) => StatisticsExpense());
       case 'select':
         return MaterialPageRoute(builder: (_) => SelectorMonView());
       case 'spline_chart':

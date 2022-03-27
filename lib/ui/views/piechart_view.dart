@@ -23,6 +23,8 @@ class _StatisticsExpenseState extends State<StatisticsExpense> {
     5: "Lottery",
   };
 
+  String centerOfPieChartText = "Income";
+
   Map<int, String> expenseCategories = {
     0: "Food",
     1: "Bills",
@@ -99,10 +101,10 @@ class _StatisticsExpenseState extends State<StatisticsExpense> {
       // }
       if (item.type == "income") {
         if (incomeMap
-            .containsKey(incomeCategories[int.parse(item.categoryIndex)]) ==
+                .containsKey(incomeCategories[int.parse(item.categoryIndex)]) ==
             false) {
-          incomeMap[
-          incomeCategories[int.parse(item.categoryIndex)].toString()] = (double.parse(item.amount.toString()));
+          incomeMap[incomeCategories[int.parse(item.categoryIndex)]
+              .toString()] = (double.parse(item.amount.toString()));
         } else {
           print("ENTRIES________ENTRIES");
           print(incomeMap.entries);
@@ -117,20 +119,20 @@ class _StatisticsExpenseState extends State<StatisticsExpense> {
 
           incomeMap[incomeCategories[int.parse(item.categoryIndex)]
               .toString()] = incomeMap[
-          incomeCategories[int.parse(item.categoryIndex)].toString()]! +
+                  incomeCategories[int.parse(item.categoryIndex)].toString()]! +
               (double.parse(item.amount.toString()));
         }
       } else if (item.type == "expense") {
         if (expenseMap.containsKey(
-            expenseCategories[int.parse(item.categoryIndex)].toString()) ==
+                expenseCategories[int.parse(item.categoryIndex)].toString()) ==
             false) {
-          expenseMap[
-          expenseCategories[int.parse(item.categoryIndex)].toString()] = (double.parse(item.amount.toString()));
+          expenseMap[expenseCategories[int.parse(item.categoryIndex)]
+              .toString()] = (double.parse(item.amount.toString()));
         } else {
           expenseMap[
-          expenseCategories[int.parse(item.categoryIndex)].toString()] =
+                  expenseCategories[int.parse(item.categoryIndex)].toString()] =
               expenseMap[expenseCategories[int.parse(item.categoryIndex)]
-                  .toString()]! +
+                      .toString()]! +
                   (double.parse(item.amount.toString()));
         }
       }
@@ -142,12 +144,18 @@ class _StatisticsExpenseState extends State<StatisticsExpense> {
     print("Expense map entries");
     print(expenseMap.entries);
 
+    sumExpenses = expenseMap.values.reduce((sum, element) => sum + element);
+    sumIncome = incomeMap.values.reduce((sum, element) => sum + element);
+
     if (selectedItem == 1) {
       return incomeMap;
     } else {
       return expenseMap;
     }
   }
+
+  var sumIncome = 0.0;
+  var sumExpenses = 0.0;
 
   List<Color> colorList = [
     Color.fromRGBO(82, 98, 255, 1),
@@ -176,7 +184,7 @@ class _StatisticsExpenseState extends State<StatisticsExpense> {
           showChartValues: true,
           chartValueStyle:
               TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-      centerText: _expense[0].type.toString(),
+      centerText: centerOfPieChartText,
       legendOptions: const LegendOptions(
           showLegendsInRow: false,
           showLegends: true,
@@ -221,10 +229,10 @@ class _StatisticsExpenseState extends State<StatisticsExpense> {
           backgroundColor: Colors.cyan,
           elevation: 0.0,
         ),
-        body: Center(
+        body: Container(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 height: 50,
@@ -243,18 +251,85 @@ class _StatisticsExpenseState extends State<StatisticsExpense> {
                   print("Data: $data");
                   getExpfromSanapshot(data);
 
+                  // swapping charts income\expense
                   if (model.selectedItem == 2) {
+                    centerOfPieChartText = "Expense";
 
                     selectedItem = model.selectedItem;
 
                     return pieChartExampleOne();
                   } else {
+                    centerOfPieChartText = "Income";
 
                     selectedItem = model.selectedItem;
 
                     return pieChartExampleOne();
                   }
                 },
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(width: 20, color: Colors.cyan))),
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              Center(
+                child: Text(
+                  'Summary',
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      color: Colors.teal[800],
+                      fontWeight: FontWeight.w900,
+                      fontStyle: FontStyle.italic,
+                      fontFamily: 'Open Sans',
+                      fontSize: 40),
+                ),
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    child: Text(
+                      'Amount gained:' + sumIncome.toString(),
+                      textAlign: TextAlign.center,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          color: Colors.amber,
+                          fontWeight: FontWeight.w900,
+                          fontStyle: FontStyle.italic,
+                          fontFamily: 'Open Sans',
+                          fontSize: 40),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Container(
+                    width: double.infinity,
+                    child: Text(
+                      'Amount spent:' + sumExpenses.toString(),
+                      textAlign: TextAlign.center,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          color: Colors.amber,
+                          fontWeight: FontWeight.w900,
+                          fontStyle: FontStyle.italic,
+                          fontFamily: 'Open Sans',
+                          fontSize: 40),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

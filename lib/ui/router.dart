@@ -1,4 +1,3 @@
-import 'package:finances/database/databaseimpl.dart';
 import 'package:finances/models/transaction.dart';
 import 'package:finances/ui/views/auth_view.dart';
 import 'package:finances/ui/views/create_new_transaction_view.dart';

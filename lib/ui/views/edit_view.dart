@@ -1,7 +1,5 @@
-import 'package:finances/database/databaseimpl.dart';
 import 'package:finances/viewmodels/edit_model.dart';
 import 'package:flutter/material.dart';
-import 'package:finances/database/databaseimpl.dart';
 import 'package:finances/viewmodels/edit_model.dart';
 
 import '../../models/transaction.dart';

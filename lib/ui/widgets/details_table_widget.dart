@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:finances/database/databaseimpl.dart';
 
 import '../../models/transaction.dart';
 

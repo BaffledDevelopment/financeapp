@@ -1,13 +1,8 @@
-import 'package:finances/database/databaseimpl.dart';
-import 'package:finances/main.dart';
 import 'package:finances/ui/widgets/application_drawer.dart';
 import 'package:finances/ui/widgets/home_view_widgets/app_bar.dart';
-import 'package:finances/ui/widgets/home_view_widgets/monthYearInterface.dart';
 import 'package:finances/ui/widgets/home_view_widgets/no_transactions_widget.dart';
 import 'package:finances/ui/widgets/home_view_widgets/summary.dart';
 import 'package:finances/ui/widgets/home_view_widgets/transactions_listwiew_widget.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'package:finances/viewmodels/home_model.dart';
 import 'package:finances/ui/views/base_view.dart';
@@ -16,8 +11,7 @@ import 'package:finances/ui/widgets/home_view_widgets/application_floactbut.dart
 
 import '../../enum_viewstate.dart';
 import '../../models/transaction.dart';
-import '../../services/firebase_database_service.dart';
-import '../rounded_button.dart';
+
 
 class HomeView extends StatelessWidget {
 

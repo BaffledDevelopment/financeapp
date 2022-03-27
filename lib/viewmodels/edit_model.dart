@@ -1,9 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:finances/database/databaseimpl.dart';
 import 'package:finances/models/category.dart';
 import 'package:finances/services/icon_service.dart';
-import 'package:finances/services/database_service.dart';
 import 'package:finances/viewmodels/base_model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:moor/moor.dart';

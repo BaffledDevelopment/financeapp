@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:finances/database/databaseimpl.dart';
 import 'package:finances/viewmodels/details_model.dart';
-import 'package:finances/viewmodels/base_model.dart';
 import 'package:finances/ui/views/base_view.dart';
 import 'package:finances/ui/widgets/details_card_widget.dart';
 

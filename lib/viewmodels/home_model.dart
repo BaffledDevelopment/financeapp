@@ -1,8 +1,3 @@
-// import 'package:finances/database/databaseimpl.dart';
-import 'dart:math';
-
-import 'package:finances/services/auth_service.dart';
-import 'package:finances/services/database_service.dart';
 import 'package:finances/services/firebase_database_service.dart';
 import 'package:finances/services/icon_service.dart';
 import 'package:finances/viewmodels/base_model.dart';

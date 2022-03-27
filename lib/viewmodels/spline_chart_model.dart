@@ -1,10 +1,10 @@
 import 'package:finances/enum_viewstate.dart';
 import 'package:finances/services/icon_service.dart';
 import 'package:finances/viewmodels/base_model.dart';
-import 'package:finances/database/databaseimpl.dart';
-import 'package:finances/services/database_service.dart';
 import '../../locator.dart';
 import 'package:finances/models/expenses_chart_data.dart';
+
+import '../models/transaction.dart';
 
 class SplineChartModel extends BaseModel {
   List<String> months = [
@@ -22,12 +22,10 @@ class SplineChartModel extends BaseModel {
     'Dec'
   ];
 
-  final DataBaseService _dataBaseService = locator<DataBaseService>();
-
   final CategoryIconService _categoryIconService =
       locator<CategoryIconService>();
 
-  List<Transaction> transactions = List.empty();
+  List<ExpenseTransaction> transactions = List.empty();
 
   int selectedMonthIndex = 0;
 
@@ -42,13 +40,13 @@ class SplineChartModel extends BaseModel {
   init(bool firstTime) async {
     if (firstTime) selectedMonthIndex = DateTime.now().month - 1;
 
-    dataList = _dataBaseService.getListOfExpenseSum();
+    // dataList = _dataBaseService.getListOfExpenseSum();
 
     setState(ViewState.Busy);
     notifyListeners();
 
-    transactions = await _dataBaseService.getAllTransactionsForType(
-        months.elementAt(selectedMonthIndex), type);
+    // transactions = await _dataBaseService.getAllTransactionsForType(
+    //     months.elementAt(selectedMonthIndex), type);
 
     dataMap = getDefaultDataMap(transactions);
 
@@ -67,8 +65,8 @@ class SplineChartModel extends BaseModel {
   changeSelectedMonth(int val) async {
     selectedMonthIndex = val;
 
-    transactions = await _dataBaseService.getAllTransactionsForType(
-        months.elementAt(selectedMonthIndex), type);
+    // transactions = await _dataBaseService.getAllTransactionsForType(
+    //     months.elementAt(selectedMonthIndex), type);
     // clear old data
     dataMap = getDefaultDataMap(transactions);
 
@@ -79,7 +77,7 @@ class SplineChartModel extends BaseModel {
     notifyListeners();
   }
 
-  Map<String, double> getDefaultDataMap(List<Transaction> transactions) {
+  Map<String, double> getDefaultDataMap(List<ExpenseTransaction> transactions) {
     Map<String, double> fullExpensesMap = {
       'Food': 0,
       'Bills': 0,

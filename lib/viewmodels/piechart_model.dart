@@ -1,10 +1,10 @@
 import 'package:finances/enum_viewstate.dart';
 import 'package:finances/services/icon_service.dart';
 import 'package:finances/viewmodels/base_model.dart';
-import 'package:finances/database/databaseimpl.dart';
-import 'package:finances/services/database_service.dart';
 import '../../locator.dart';
 import 'package:finances/models/expenses_chart_data.dart';
+
+import '../models/transaction.dart';
 
 class PieChartModel extends BaseModel {
   List<String> months = [
@@ -22,12 +22,11 @@ class PieChartModel extends BaseModel {
     'Dec'
   ];
 
-  final DataBaseService _dataBaseService = locator<DataBaseService>();
 
   final CategoryIconService _categoryIconService =
       locator<CategoryIconService>();
 
-  List<Transaction> transactions = List.empty();
+  List<ExpenseTransaction> transactions = List.empty();
 
   int selectedMonthIndex = 0;
 
@@ -56,8 +55,8 @@ class PieChartModel extends BaseModel {
   changeSelectedMonth(int val) async {
     selectedMonthIndex = val;
 
-    transactions = await _dataBaseService.getAllTransactionsForType(
-        months.elementAt(selectedMonthIndex), type);
+    // transactions = await _dataBaseService.getAllTransactionsForType(
+    //     months.elementAt(selectedMonthIndex), type);
     // clear old data
     // dataMap = getDefaultDataMap(transactions);
 

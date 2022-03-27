@@ -1,10 +1,11 @@
-import 'package:finances/database/databaseimpl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:finances/viewmodels/home_model.dart';
 
+import '../../../models/transaction.dart';
+
 class ListViewTransactions extends StatelessWidget {
-  final List<Transaction> transactions;
+  final List<ExpenseTransaction> transactions;
   final HomeModel model;
 
   const ListViewTransactions(

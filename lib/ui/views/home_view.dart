@@ -1,8 +1,10 @@
+import 'package:finances/services/firebase_database_service.dart';
 import 'package:finances/ui/widgets/application_drawer.dart';
 import 'package:finances/ui/widgets/home_view_widgets/app_bar.dart';
 import 'package:finances/ui/widgets/home_view_widgets/no_transactions_widget.dart';
 import 'package:finances/ui/widgets/home_view_widgets/summary.dart';
 import 'package:finances/ui/widgets/home_view_widgets/transactions_listwiew_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:finances/viewmodels/home_model.dart';
 import 'package:finances/ui/views/base_view.dart';
@@ -11,10 +13,13 @@ import 'package:finances/ui/widgets/home_view_widgets/application_floactbut.dart
 
 import '../../enum_viewstate.dart';
 import '../../models/transaction.dart';
+import '../rounded_button.dart';
 
 
 class HomeView extends StatelessWidget {
 
+  final user = FirebaseAuth.instance.currentUser!;
+  FirebaseDatabaseService fdb_service = FirebaseDatabaseService();
 
 
   @override
@@ -34,12 +39,12 @@ class HomeView extends StatelessWidget {
                 children: <Widget>[
                   Column(
                     children: <Widget>[
-                      // Text(user.email!),
-                      // Text(user.uid),
-                      // RoundedButton(
-                      //     text: "Press me",
-                      //     press: () => fdb_service.transactionListFromSnapshot(user)
-                      // ),
+                      Text(user.email!),
+                      Text(user.uid),
+                      RoundedButton(
+                          text: "Press me",
+                          press: () => fdb_service.saveDatabaseToCSVFile(user),
+                      ),
 
                       SummaryWidget(
                           income: model.incomeSum, expense: model.expenseSum),

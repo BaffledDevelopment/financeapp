@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:csv/csv.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 
 import '../models/transaction.dart';
 
@@ -34,9 +37,9 @@ class FirebaseDatabaseService {
     var getId = await FirebaseFirestore.instance
         .collection('users')
         .doc(user.uid)
-        .collection("transaction").
-    where("id", isEqualTo: id).get();
-
+        .collection("transaction")
+        .where("id", isEqualTo: id)
+        .get();
 
     var transactionID = getId.docs[0].id;
 
@@ -118,7 +121,8 @@ class FirebaseDatabaseService {
         .delete();
   }
 
-  Future<void> updateExpense(User user, ExpenseTransaction transaction, String note, int amount) async {
+  Future<void> updateExpense(User user, ExpenseTransaction transaction,
+      String note, int amount) async {
     FirebaseFirestore.instance
         .collection('users')
         .doc(user.uid)
@@ -162,6 +166,10 @@ class FirebaseDatabaseService {
     var querySnapshot =
         await expenseCollection.doc(user.uid).collection("transaction").get();
 
+    print("*********************");
+    print(querySnapshot.toString());
+    print("________________________");
+
     List<ExpenseTransaction> transactionList = [];
 
     transactionList = querySnapshot.docs
@@ -169,6 +177,7 @@ class FirebaseDatabaseService {
         .toList();
 
     transactionList.forEach((e) {
+      print(e.toJson());
       if (e.type == "expense") {
         expenseSum = expenseSum + e.amount;
       }
@@ -199,10 +208,10 @@ class FirebaseDatabaseService {
     return overallSum;
   }
 
-  Future<List<ExpenseTransaction>> getListExpensesForMonth(User user, String month) async {
-
+  Future<List<ExpenseTransaction>> getListExpensesForMonth(
+      User user, String month) async {
     var querySnapshot =
-    await expenseCollection.doc(user.uid).collection("transaction").get();
+        await expenseCollection.doc(user.uid).collection("transaction").get();
 
     List<ExpenseTransaction> transactionList = [];
 
@@ -219,8 +228,47 @@ class FirebaseDatabaseService {
     });
 
     return returnTransactionList;
-
   }
 
+  Future<void> saveDatabaseToCSVFile(User user) async {
+    List<List<dynamic>> rows = <List<dynamic>>[];
+    // new List<List<dynamic>>.empty();
 
+    // final String? directory = (await getExternalStorageDirectory())?.path;
+    // final path = "$directory/csv-${DateTime.now()}.csv";
+
+    var querySnapshot =
+        await expenseCollection.doc(user.uid).collection("transaction").get();
+
+    rows.add(["amount", "categoryIndex", "day", "id", "month", "note", "type"]);
+
+    if (querySnapshot.docs != null) {
+      for (int i = 0; i < querySnapshot.size; i++) {
+        List<dynamic> row = <dynamic>[];
+        row.add(querySnapshot.docs[i]["amount"]);
+        row.add(querySnapshot.docs[i]["categoryIndex"]);
+        row.add(querySnapshot.docs[i]["day"]);
+        row.add(querySnapshot.docs[i]["id"]);
+        row.add(querySnapshot.docs[i]["month"]);
+        row.add(querySnapshot.docs[i]["type"]);
+        print(rows.toList());
+        rows.add(row);
+      }
+
+      // final File file = await File(path).create();
+
+      String? dir =
+          (await getExternalStorageDirectory())?.absolute.path;
+      // dir = (dir! + "/documents");
+      dir = "/storage/emulated/0/Download/filename.csv";
+      String fileDir = "$dir";
+      // File f = new File(fileDir + "filename.csv");
+      File f = File(dir);
+      String csv = const ListToCsvConverter().convert(rows);
+
+      // String csv = const ListToCsvConverter().convert(rows);
+      f.writeAsString(csv);
+      print(dir);
+    }
+  }
 }

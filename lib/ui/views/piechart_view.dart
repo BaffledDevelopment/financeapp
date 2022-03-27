@@ -1,3 +1,4 @@
+import 'package:chips_choice_null_safety/chips_choice_null_safety.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finances/ui/views/base_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -328,6 +329,17 @@ class _StatisticsExpenseState extends State<StatisticsExpense> {
                           fontFamily: 'Open Sans',
                           fontSize: 40),
                     ),
+                  ),
+                  ChipsChoice<int>.single(
+                    choiceStyle: C2ChoiceStyle(elevation: 1, color: Colors.red),
+                    value: model.selectedMonthIndex,
+                    wrapped: true,
+                    choiceItems: C2Choice.listFrom<int, String>(
+                      source: model.months,
+                      value: (i, v) => i,
+                      label: (i, v) => v,
+                    ),
+                    onChanged: (val) => model.changeSelectedMonth(val),
                   ),
                 ],
               ),

@@ -57,9 +57,6 @@ class HomeView extends StatelessWidget {
 
   buildOverlayPicker(showOrHide, HomeModel model, BuildContext context) {
     Navigator.of(context).pushNamed("select");
-    // return PickMonthAndYearOverlay();
-    // return PickMonthAndYearOverlay(
-    //     model: model, showOrHide: showOrHide, context: context);
   }
 
   buildAppBar(String title, HomeModel model) {

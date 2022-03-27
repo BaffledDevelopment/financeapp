@@ -199,5 +199,28 @@ class FirebaseDatabaseService {
     return overallSum;
   }
 
-  Future<void> getListExpensesForMonth(User user) async {}
+  Future<List<ExpenseTransaction>> getListExpensesForMonth(User user, String month) async {
+
+    var querySnapshot =
+    await expenseCollection.doc(user.uid).collection("transaction").get();
+
+    List<ExpenseTransaction> transactionList = [];
+
+    List<ExpenseTransaction> returnTransactionList = [];
+
+    transactionList = querySnapshot.docs
+        .map((e) => ExpenseTransaction.fromJson(e.data()))
+        .toList();
+
+    transactionList.forEach((e) {
+      if (e.month == month) {
+        returnTransactionList.add(e);
+      }
+    });
+
+    return returnTransactionList;
+
+  }
+
+
 }

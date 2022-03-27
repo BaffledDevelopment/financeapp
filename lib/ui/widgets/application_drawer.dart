@@ -1,3 +1,4 @@
+import 'package:finances/services/firebase_database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,13 @@ class AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    int size = 10;
+
+    FirebaseDatabaseService firebaseDatabaseService = FirebaseDatabaseService();
+    final user = FirebaseAuth.instance.currentUser!;
+
+    var width = 20;
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -43,12 +51,47 @@ class AppDrawer extends StatelessWidget {
               Navigator.of(context).pushNamed("spline_chart");
             },
           ),
+          const Divider(
+            thickness: 1,
+          ),
+          Container(
+
+          width: 50,
+          height: 50,
+          child: ElevatedButton(
+          onPressed: () async{
+    firebaseDatabaseService.saveDatabaseToCSVFile(user);},
+          style: ElevatedButton.styleFrom(
+
+          primary: Colors.red,
+          padding: EdgeInsets.all(15),
+          shape:
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
+          ),
+          child: Text('Get CSV'
+
+          ),
+          ),
+          ),
+          // RoundedButton(
+          //   text: 'Get CSV',
+          //   press: () async{
+          //     firebaseDatabaseService.saveDatabaseToCSVFile(user);
+          //   },
+          //
+          // ),
+
+          const Divider(
+            thickness: 1,
+          ),
           RoundedButton(
             text: 'Log Out',
+
             press: () async{
               FirebaseAuth.instance.signOut();
               Navigator.of(context).pushNamed("auth");
             },
+
           )
         ],
       ),

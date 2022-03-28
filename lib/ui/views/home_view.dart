@@ -43,11 +43,15 @@ class HomeView extends StatelessWidget {
         body: model.state == ViewState.Busy
             ? const Center(child: CircularProgressIndicator())
             : Stack(
+
                 children: <Widget>[
                   Column(
+
                     children: <Widget>[
+
                       ChipsChoice<int>.single(
-                        choiceStyle: C2ChoiceStyle(elevation: 1, color: Colors.red),
+
+                        choiceStyle: C2ChoiceStyle(elevation: 10, color: Colors.red),
                         value: model.selectedMonthIndex,
                         wrapped: true,
                         choiceItems: C2Choice.listFrom<int, String>(
@@ -57,9 +61,10 @@ class HomeView extends StatelessWidget {
                         ),
                         onChanged: (val) => model.changeSelectedMonth(val),
                       ),
+
                       ChipsChoice<int>.single(
                         choiceStyle:
-                        C2ChoiceStyle(elevation: 1, color: Colors.green),
+                        C2ChoiceStyle(elevation: 10, color: Colors.green, ),
                         value: model.type == 'income' ? 0 : 1,
                         wrapped: true,
                         choiceItems: C2Choice.listFrom<int, String>(
@@ -69,14 +74,6 @@ class HomeView extends StatelessWidget {
                         ),
                         onChanged: (val) => model.changeType(val),
                       ),
-
-                      // Text(user.email!),
-                      // Text(user.uid),
-                      // RoundedButton(
-                      //     text: "Press me",
-                      //     press: () => fdb_service.saveDatabaseToCSVFile(user),
-                      // ),
-
                       SummaryWidget(
                           income: model.incomeSum, expense: model.expenseSum),
                       buildList(model.transactions, model)

@@ -9,15 +9,15 @@ class SummaryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(4.0),
       child: Card(
         elevation: 8,
         child: Padding(
-          padding: const EdgeInsets.all(32.0),
+          padding: const EdgeInsets.all(28.0),
           child: Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Column(
                     children: <Widget>[
@@ -72,9 +72,9 @@ class SummaryWidget extends StatelessWidget {
               Divider(
                 thickness: 1,
               ),
-              SizedBox(
-                height: 5,
-              ),
+              // SizedBox(
+              //   height: 5,
+              // ),
               Row(
                 children: <Widget>[
                   const Text("Прогноз остатка c учетом инфляции на:",
@@ -82,8 +82,8 @@ class SummaryWidget extends StatelessWidget {
                           fontSize: 16, fontWeight: FontWeight.w600)),
                 ],
               ),
-          SizedBox(
-            height: 5,),
+          // SizedBox(
+          //   height: 5,),
               Row(
                 children: <Widget>[
                   Column(

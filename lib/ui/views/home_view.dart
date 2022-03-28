@@ -14,7 +14,7 @@ import 'package:finances/ui/widgets/home_view_widgets/application_floactbut.dart
 
 import '../../enum_viewstate.dart';
 import '../../models/transaction.dart';
-import '../rounded_button.dart';
+import '../widgets/changeTypeOfCurrency.dart';
 
 
 class HomeView extends StatelessWidget {
@@ -30,7 +30,13 @@ class HomeView extends StatelessWidget {
 
       onModelReady: (model) async => await model.init(true),
       builder: (context, model, child) => Scaffold(
-        appBar: buildAppBar(model!.appBarTitle, model),
+        // appBar: buildAppBar(model!.appBarTitle, model),
+        appBar: AppBar(
+          title: ChangerOfCurrencyType(
+              model!.selectedItem, model.changeSelectedItem),
+          backgroundColor: Colors.cyan,
+          elevation: 0.0,
+        ),
         drawer: AppDrawer(context!),
         floatingActionButton: ApplicationFloActBut(model.closeMonthPicker),
         // push to new transaction

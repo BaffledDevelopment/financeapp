@@ -41,6 +41,8 @@ class HomeModel extends BaseModel {
   int expenseSum = 0;
   int incomeSum = 0;
 
+  int selectedItem = 1;
+
   String type = "income";
 
   List<String> types = ["Income", "Expense"];
@@ -144,5 +146,22 @@ class HomeModel extends BaseModel {
         color: categoryIcon.color,
       );
     }
+  }
+
+  Future<void> changeSelectedItem(int newItemIndex) async {
+
+    selectedItem = newItemIndex;
+
+    print("I select item");
+    print(selectedItem);
+    print("***************");
+    //
+    // setState(ViewState.Busy);
+    //
+    // transactions = await _firebaseDatabaseService.getListExpensesForMonthWithIncome(user, months[selectedMonthIndex], type);
+    //
+    // setState(ViewState.Idle);
+
+    notifyListeners();
   }
 }

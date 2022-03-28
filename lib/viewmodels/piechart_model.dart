@@ -234,13 +234,13 @@ class PieChartModel extends BaseModel {
 
     print("I select item");
     print(selectedItem);
-    print("***************");
-
-    setState(ViewState.Busy);
-
-    transactions = await _firebaseDatabaseService.getListExpensesForMonthWithIncome(user, months[selectedMonthIndex], type);
-
-    setState(ViewState.Idle);
+    // print("***************");
+    //
+    // setState(ViewState.Busy);
+    //
+    // transactions = await _firebaseDatabaseService.getListExpensesForMonthWithIncome(user, months[selectedMonthIndex], type);
+    //
+    // setState(ViewState.Idle);
 
     notifyListeners();
   }

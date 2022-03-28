@@ -1,13 +1,9 @@
-import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csv/csv.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
 
-// import 'package:permission_handler/permission_handler.dart';
 import 'dart:io';
 
 import '../models/transaction.dart';
@@ -66,14 +62,7 @@ class FirebaseDatabaseService {
   }
 
   Future<void> getAllExpenses(User user) async {
-    // var userDoc =
-    //     await expenseCollection.where('email', isEqualTo: user.email).get();
 
-    // var users = expenseCollection.doc(user.uid).collection("").where('email', isEqualTo: user.email).get();
-
-    // userDoc.docs.forEach((element) {
-    //   print(element.data());
-    // });
   }
 
   Future<List<ExpenseTransaction>?> transactionListFromSnapshot(
@@ -84,26 +73,9 @@ class FirebaseDatabaseService {
       var querySnapshot =
           await expenseCollection.doc(user.uid).collection("transaction").get();
 
-      // transactionList.add(ExpenseTransaction.fromJson(querySnapshot.docs[1].data()));
-
       transactionList = querySnapshot.docs
           .map((e) => ExpenseTransaction.fromJson(e.data()))
           .toList();
-
-      print("Contents of list");
-
-      // transactionList.forEach((e) {
-      //   print(e.type);
-      //   print(e.day);
-      //   print(e.month);
-      //   print(e.note);
-      //   print(e.amount);
-      //   print(e.categoryindex);
-      //   print(e.type);
-      //   print(e.id);
-      //
-      //   print("________________________________");
-      // });
 
       return transactionList;
     } catch (err) {
@@ -114,7 +86,6 @@ class FirebaseDatabaseService {
   Future<void> deleteExpense(User user, ExpenseTransaction transaction) async {
     print("___________________");
 
-    // print(transaction.id);
     print(transaction.id);
 
     await FirebaseFirestore.instance
@@ -245,20 +216,6 @@ class FirebaseDatabaseService {
   Future<void> saveDatabaseToCSVFile(User user) async {
     List<List<dynamic>> rows = <List<dynamic>>[];
 
-    // await SimplePermissions.requestPermission(Permission.WriteExternalStorage);
-    // bool checkPermission = await SimplePermissions.checkPermission(
-    //     Permission.WriteExternalStorage);
-    // if (checkPermission) {
-    //   //String csv = const ListToCsvConverter().convert(rows);
-    //   String dir = await ExtStorage.getExternalStoragePublicDirectory(
-    //       ExtStorage.DIRECTORY_DOWNLOADS);
-
-    // var status = await Permission.storage.status;
-    // if (!status.isGranted) {
-    //   await Permission.storage.request();
-    // }
-    // new List<List<dynamic>>.empty();
-
     final String? directory = (await getExternalStorageDirectory())?.path;
     final path = "$directory/csv-${DateTime.now()}.csv";
 
@@ -280,20 +237,12 @@ class FirebaseDatabaseService {
         rows.add(row);
       }
 
-      // Directory? tempDir = await getDownloadsDirectory();
-      // String? tempPath = tempDir?.path;
-      // var filePath = tempPath! + "filename.csv";
-      // File f = File(filePath);
-      //
-      //
-
       final File file = await File(path).create();
 
       String? dir = (await getExternalStorageDirectory())?.absolute.path;
-      // dir = (dir! + "/documents");
+
       dir = "/storage/emulated/0/Download/filename.csv";
       String fileDir = "$dir";
-      // File f = new File(fileDir + "filename.csv");
 
       String csv = const ListToCsvConverter().convert(rows);
 
@@ -302,7 +251,6 @@ class FirebaseDatabaseService {
       } catch (e) {
         print(e);
       }
-
       print(directory);
     }
   }

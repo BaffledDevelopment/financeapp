@@ -19,9 +19,9 @@ class SignupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseView<RegisterViewModel>(
-      // onModelReady: (model) => model.init(),
+
       builder: (context, model, widget) => Scaffold(
-        // backgroundColor: Color(0xFFF0F0F0),
+
         appBar: AppBar(
           backgroundColor: Colors.cyan,
           elevation: 0,

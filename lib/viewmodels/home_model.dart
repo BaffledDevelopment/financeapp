@@ -57,7 +57,7 @@ class HomeModel extends BaseModel {
 
     setState(ViewState.Busy);
 
-    transactions = await _firebaseDatabaseService.getListExpensesForMonth(user, months[selectedMonthIndex], type);
+    transactions = await _firebaseDatabaseService.getListExpensesForMonthWithIncome(user, months[selectedMonthIndex], type);
 
     setState(ViewState.Idle);
 
@@ -69,7 +69,7 @@ class HomeModel extends BaseModel {
 
     setState(ViewState.Busy);
 
-    transactions = await _firebaseDatabaseService.getListExpensesForMonth(user, months[selectedMonthIndex], type);
+    transactions = await _firebaseDatabaseService.getListExpensesForMonthWithIncome(user, months[selectedMonthIndex], type);
 
     setState(ViewState.Idle);
 

@@ -3,10 +3,12 @@ import 'dart:ui';
 import 'package:finances/enum_viewstate.dart';
 import 'package:finances/services/icon_service.dart';
 import 'package:finances/viewmodels/base_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../../locator.dart';
 import 'package:finances/models/expenses_chart_data.dart';
 
 import '../models/transaction.dart';
+import '../services/firebase_database_service.dart';
 import '../ui/views/piechart_view.dart';
 
 class PieChartModel extends BaseModel {
@@ -21,6 +23,22 @@ class PieChartModel extends BaseModel {
 
   var sumIncome = 0.0;
   var sumExpenses = 0.0;
+
+  final user = FirebaseAuth.instance.currentUser!;
+  final FirebaseDatabaseService _firebaseDatabaseService = locator<FirebaseDatabaseService>();
+
+
+  List<ExpenseTransaction> transactions = List.empty();
+
+  int selectedMonthIndex = 0;
+
+  String type = 'expense';
+
+  List<String> types = ["Income", "Expense"];
+
+  late List<ExpensesChartData> dataList;
+
+  bool isSelected = false;
 
   List<Color> colorList = [
     Color.fromRGBO(82, 98, 255, 1),
@@ -75,6 +93,8 @@ class PieChartModel extends BaseModel {
   };
 
   Map<String, double> getcategoryIndexData() {
+
+
     incomeMap = {};
     expenseMap = {};
 
@@ -120,6 +140,7 @@ class PieChartModel extends BaseModel {
       //             1;
       //   }
       // }
+
       if (item.type == "income") {
         if (incomeMap
             .containsKey(incomeCategories[int.parse(item.categoryIndex)]) ==
@@ -177,53 +198,37 @@ class PieChartModel extends BaseModel {
 
 
 
-  final CategoryIconService _categoryIconService =
-      locator<CategoryIconService>();
-
-  List<ExpenseTransaction> transactions = List.empty();
-
-  int selectedMonthIndex = 0;
-
-  Map<String, double> dataMap = new Map<String, double>();
-
-  String type = 'expense';
-
-  List<String> types = ["Income", "Expense"];
-
-  late List<ExpensesChartData> dataList;
-
   init(bool firstTime) async {
     if (firstTime) selectedMonthIndex = DateTime.now().month - 1;
 
     setState(ViewState.Busy);
-    notifyListeners();
 
-    print(dataMap.toString());
+    // transactions = (await _firebaseDatabaseService.transactionListFromSnapshot(user))!;
+    notifyListeners();
 
     setState(ViewState.Idle);
     notifyListeners();
   }
 
-  // List<ExpensesChartData> expenses = getExpensesDataForEachMonth(transactions);
-
   changeSelectedMonth(int val) async {
+
+    isSelected = true;
+
     selectedMonthIndex = val;
 
-    // transactions = await _dataBaseService.getAllTransactionsForType(
-    //     months.elementAt(selectedMonthIndex), type);
-    // clear old data
-    // dataMap = getDefaultDataMap(transactions);
+    setState(ViewState.Busy);
 
-    transactions.forEach((element) {
-      // prepareDataMap(element);
-    });
+    transactions = await _firebaseDatabaseService.getListExpensesForMonth(user, months[selectedMonthIndex], type);
+
+    setState(ViewState.Idle);
 
     notifyListeners();
+
   }
 
-  // int selectedItem = 1;
+  Future<void> changeSelectedItem(int newItemIndex) async {
 
-  void changeSelectedItem(int newItemIndex) {
+    isSelected = true;
 
     selectedItem = newItemIndex;
 
@@ -231,7 +236,12 @@ class PieChartModel extends BaseModel {
     print(selectedItem);
     print("***************");
 
+    setState(ViewState.Busy);
+
+    transactions = await _firebaseDatabaseService.getListExpensesForMonthWithIncome(user, months[selectedMonthIndex], type);
+
+    setState(ViewState.Idle);
+
     notifyListeners();
   }
-
 }

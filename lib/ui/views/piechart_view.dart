@@ -55,13 +55,14 @@ class _StatisticsExpenseState extends State<StatisticsExpense> {
 
   @override
   Widget build(BuildContext context) {
+
     final Stream<QuerySnapshot> expStream = FirebaseFirestore.instance
         .collection('users')
         .doc(user.uid)
         .collection("transaction")
         .snapshots();
 
-    void getExpfromSanapshot(snapshot) {
+    void getExpfromSanapshot(snapshot, String month) {
       if (snapshot.docs.isNotEmpty) {
         pieChartModel.expense = [];
         for (int i = 0; i < snapshot.docs.length; i++) {
@@ -71,15 +72,20 @@ class _StatisticsExpenseState extends State<StatisticsExpense> {
           print("this was a.data()");
 
           Expense exp = Expense.fromJson(a.data());
-          pieChartModel.expense.add(exp);
-          print(exp);
+
+          print(exp.toString());
+
+          if (exp.month == month) {
+            pieChartModel.expense.add(exp);
+          }
+            else {
+            pieChartModel.expense.add(exp);
+          }
         }
       }
     }
 
     return BaseView<PieChartModel>(
-
-
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           title: TransactionTypeSpinnerPieChart(
@@ -107,22 +113,20 @@ class _StatisticsExpenseState extends State<StatisticsExpense> {
 
                   final data = snapshot.requireData;
                   print("Data: $data");
-                  getExpfromSanapshot(data);
+                  print(model.months[model.selectedMonthIndex]);
+
+                  getExpfromSanapshot(data, model.months[model.selectedMonthIndex]);
 
                   // swapping charts income\expense
                   if (model.selectedItem == 2) {
                     centerOfPieChartText = "Expense";
-
-                    pieChartModel.selectedItem = model.selectedItem;
-
-                    return pieChartExampleOne();
                   } else {
                     centerOfPieChartText = "Income";
-
-                    pieChartModel.selectedItem = model.selectedItem;
-
-                    return pieChartExampleOne();
                   }
+
+                  pieChartModel.selectedItem = model.selectedItem;
+                  model.isSelected = true;
+                  return pieChartExampleOne();
                 },
               ),
               const SizedBox(
@@ -212,11 +216,13 @@ class Expense {
   int amount;
   String categoryIndex;
   String type;
+  String month;
 
   Expense({
     required this.amount,
     required this.categoryIndex,
     required this.type,
+    required this.month
   });
 
   factory Expense.fromJson(Map<String, dynamic> json) {
@@ -224,6 +230,7 @@ class Expense {
       amount: json['amount'],
       categoryIndex: json['categoryIndex'].toString(),
       type: json['type'],
+      month: json['month']
     );
   }
 }

@@ -183,7 +183,7 @@ class FirebaseDatabaseService {
     return overallSum;
   }
 
-  Future<List<ExpenseTransaction>> getListExpensesForMonth(
+  Future<List<ExpenseTransaction>> getListExpensesForMonthWithIncome(
       User user, String month, String type) async {
     var querySnapshot =
         await expenseCollection.doc(user.uid).collection("transaction").get();
@@ -205,6 +205,36 @@ class FirebaseDatabaseService {
     } else {
       transactionList.forEach((e) {
         if (e.month == month && e.type == "expense") {
+          returnTransactionList.add(e);
+        }
+      });
+    }
+
+    return returnTransactionList;
+  }
+
+  Future<List<ExpenseTransaction>> getListExpensesForMonth(
+      User user, String month, String type) async {
+    var querySnapshot =
+    await expenseCollection.doc(user.uid).collection("transaction").get();
+
+    List<ExpenseTransaction> transactionList = [];
+
+    List<ExpenseTransaction> returnTransactionList = [];
+
+    transactionList = querySnapshot.docs
+        .map((e) => ExpenseTransaction.fromJson(e.data()))
+        .toList();
+
+    if (type == "income") {
+      transactionList.forEach((e) {
+        if (e.month == month) {
+          returnTransactionList.add(e);
+        }
+      });
+    } else {
+      transactionList.forEach((e) {
+        if (e.month == month) {
           returnTransactionList.add(e);
         }
       });

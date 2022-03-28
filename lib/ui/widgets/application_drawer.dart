@@ -12,7 +12,6 @@ class AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     int size = 10;
 
     FirebaseDatabaseService firebaseDatabaseService = FirebaseDatabaseService();
@@ -55,23 +54,20 @@ class AppDrawer extends StatelessWidget {
             thickness: 1,
           ),
           Container(
-
-          width: 50,
-          height: 50,
-          child: ElevatedButton(
-          onPressed: () async{
-    firebaseDatabaseService.saveDatabaseToCSVFile(user);},
-          style: ElevatedButton.styleFrom(
-
-          primary: Colors.red,
-          padding: EdgeInsets.all(15),
-          shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
-          ),
-          child: Text('Get CSV'
-
-          ),
-          ),
+            width: 50,
+            height: 50,
+            child: ElevatedButton(
+              onPressed: () async {
+                firebaseDatabaseService.saveDatabaseToCSVFile(user);
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.red,
+                padding: EdgeInsets.all(15),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(35)),
+              ),
+              child: Text('Get CSV'),
+            ),
           ),
           // RoundedButton(
           //   text: 'Get CSV',
@@ -86,12 +82,10 @@ class AppDrawer extends StatelessWidget {
           ),
           RoundedButton(
             text: 'Log Out',
-
-            press: () async{
+            press: () async {
               FirebaseAuth.instance.signOut();
               Navigator.of(context).pushNamed("auth");
             },
-
           )
         ],
       ),

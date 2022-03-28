@@ -14,6 +14,60 @@ class TransactionsListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    String textForCurrency = "";
+    if (model.selectedItem == 1){
+      textForCurrency = "USD";
+    }
+
+    String buildCurrencyDescription(ExpenseTransaction transaction) {
+
+      String currencyDescription = "";
+
+      // USD - default option
+      if (model.selectedItem == 1) {
+        currencyDescription = transaction.type +
+            ": " +
+            (transaction.amount).toString() + " USD";
+
+        // RUB - second option
+      } else if (model.selectedItem == 2) {
+        currencyDescription = "RUB/USD ratio is: 74 ---> " + transaction.type +
+            ": " +
+            (transaction.amount  * 74).toString() + " RUB";
+
+        // popugs - third option
+      } else if (model.selectedItem == 3) {
+        currencyDescription = "POPUG/USD ratio is: 0.1 ---> " + transaction.type +
+            ": " +
+            (transaction.amount * 0.1).toStringAsPrecision(3) + " POPUG";
+      }
+
+      return  currencyDescription;
+    }
+
+    String buildCurrencyForTile(ExpenseTransaction transaction) {
+
+      String currencyDescription = "";
+
+      // USD - default option
+      if (model.selectedItem == 1) {
+        currencyDescription =
+            (transaction.amount).toString() + " USD";
+
+        // RUB - second option
+      } else if (model.selectedItem == 2) {
+        currencyDescription =
+            (transaction.amount  * 74).toString() + " RUB";
+
+        // popugs - third option
+      } else if (model.selectedItem == 3) {
+        currencyDescription = (transaction.amount * 0.2).toStringAsPrecision(3) + " POPUG";
+      }
+
+      return  currencyDescription;
+    }
+
     return Flexible(
       child: ListView(
         padding: EdgeInsets.all(8),
@@ -43,12 +97,13 @@ class TransactionsListView extends StatelessWidget {
                           transaction.day + '/' + transaction.month,
                           style: TextStyle(fontWeight: FontWeight.w300),
                         ),
+
                         Text(
-                          transaction.type +
-                              ": " +
-                              transaction.amount.toString(),
+                          buildCurrencyDescription(transaction),
+
                           style: TextStyle(fontWeight: FontWeight.w300),
                         )
+
                       ],
                     ),
                     Divider(
@@ -62,8 +117,9 @@ class TransactionsListView extends StatelessWidget {
                             transaction.categoryindex, transaction.type),
                       ),
                       title: Text(transaction.note),
-                      trailing: Text(transaction.amount.toString(),
-                          style: TextStyle(fontSize: 20)),
+                      trailing: Text(buildCurrencyForTile(transaction),
+                          style: TextStyle(fontSize: 20)
+                      ),
                     )
                   ],
                 ),

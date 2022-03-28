@@ -20,7 +20,7 @@ class ChangerOfCurrencyType extends StatelessWidget {
             value: 2,
           ),
           DropdownMenuItem(
-            child: Text("Popugs"),
+            child: Text("POPUG"),
             value: 3,
           ),
         ],

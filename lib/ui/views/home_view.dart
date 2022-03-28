@@ -107,12 +107,8 @@ class HomeView extends StatelessWidget {
 
   buildList(List<ExpenseTransaction>? transactions, HomeModel model) {
 
-
     print("INFO ABOUT TRANSACTIONINFO ABOUT TRANSACTIONINFO ABOUT TRANSACTIONINFO ABOUT TRANSACTIONINFO ABOUT TRANSACTIONINFO ABOUT TRANSACTIONINFO ABOUT TRANSACTIONINFO ABOUT TRANSACTION");
-    print(transactions);
     print(transactions?.toList());
-    print(transactions.toString());
-
 
     if (transactions != null) {
       return TransactionsListView(transactions, model);

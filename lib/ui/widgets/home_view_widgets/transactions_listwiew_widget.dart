@@ -26,7 +26,7 @@ class TransactionsListView extends StatelessWidget {
                           if (value != null)
                             {
                               if (value == true)
-                                {print("Transaction deleted"), model.init()}
+                                {print("Transaction deleted"), model.init(false)}
                               else
                                 {print("Not deleted")}
                             }

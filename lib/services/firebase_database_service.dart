@@ -6,7 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
+
+// import 'package:permission_handler/permission_handler.dart';
 import 'dart:io';
 
 import '../models/transaction.dart';
@@ -212,7 +213,7 @@ class FirebaseDatabaseService {
   }
 
   Future<List<ExpenseTransaction>> getListExpensesForMonth(
-      User user, String month) async {
+      User user, String month, String type) async {
     var querySnapshot =
         await expenseCollection.doc(user.uid).collection("transaction").get();
 
@@ -224,11 +225,19 @@ class FirebaseDatabaseService {
         .map((e) => ExpenseTransaction.fromJson(e.data()))
         .toList();
 
-    transactionList.forEach((e) {
-      if (e.month == month) {
-        returnTransactionList.add(e);
-      }
-    });
+    if (type == "income") {
+      transactionList.forEach((e) {
+        if (e.month == month && e.type == "income") {
+          returnTransactionList.add(e);
+        }
+      });
+    } else {
+      transactionList.forEach((e) {
+        if (e.month == month && e.type == "expense") {
+          returnTransactionList.add(e);
+        }
+      });
+    }
 
     return returnTransactionList;
   }
@@ -244,11 +253,10 @@ class FirebaseDatabaseService {
     //   String dir = await ExtStorage.getExternalStoragePublicDirectory(
     //       ExtStorage.DIRECTORY_DOWNLOADS);
 
-
-    var status = await Permission.storage.status;
-    if (!status.isGranted) {
-      await Permission.storage.request();
-    }
+    // var status = await Permission.storage.status;
+    // if (!status.isGranted) {
+    //   await Permission.storage.request();
+    // }
     // new List<List<dynamic>>.empty();
 
     final String? directory = (await getExternalStorageDirectory())?.path;
@@ -272,7 +280,6 @@ class FirebaseDatabaseService {
         rows.add(row);
       }
 
-
       // Directory? tempDir = await getDownloadsDirectory();
       // String? tempPath = tempDir?.path;
       // var filePath = tempPath! + "filename.csv";
@@ -280,12 +287,9 @@ class FirebaseDatabaseService {
       //
       //
 
-
-
       final File file = await File(path).create();
 
-      String? dir =
-          (await getExternalStorageDirectory())?.absolute.path;
+      String? dir = (await getExternalStorageDirectory())?.absolute.path;
       // dir = (dir! + "/documents");
       dir = "/storage/emulated/0/Download/filename.csv";
       String fileDir = "$dir";
@@ -293,14 +297,13 @@ class FirebaseDatabaseService {
 
       String csv = const ListToCsvConverter().convert(rows);
 
-    try {
-      file.writeAsString(csv);
-    } catch (e) {
-      print(e);
-    }
+      try {
+        file.writeAsString(csv);
+      } catch (e) {
+        print(e);
+      }
 
       print(directory);
-
     }
   }
 }

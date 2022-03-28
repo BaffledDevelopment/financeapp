@@ -23,7 +23,7 @@ class HomeModel extends BaseModel {
   late String selectedYear;
   late int selectedMonthIndex;
 
-  List months = [
+  List<String> months = [
     'Jan',
     'Feb',
     'Mar',
@@ -41,6 +41,54 @@ class HomeModel extends BaseModel {
   int expenseSum = 0;
   int incomeSum = 0;
 
+  String type = "income";
+
+  List<String> types = ["Income", "Expense"];
+
+  changeType(int val) async {
+    // 0 => income
+    // 1 => expense
+    if (val == 0) {
+      type = 'income';
+
+    } else {
+      type = 'expense';
+    }
+
+    setState(ViewState.Busy);
+
+    transactions = await _firebaseDatabaseService.getListExpensesForMonth(user, months[selectedMonthIndex], type);
+
+    setState(ViewState.Idle);
+
+    notifyListeners();
+
+    // await init(false);
+  }
+
+  changeSelectedMonth(int val) async {
+    selectedMonthIndex = val;
+
+    setState(ViewState.Busy);
+
+    transactions = await _firebaseDatabaseService.getListExpensesForMonth(user, months[selectedMonthIndex], type);
+
+    setState(ViewState.Idle);
+
+
+
+    // transactions = await _dataBaseService.getAllTransactionsForType(
+    //     months.elementAt(selectedMonthIndex), type);
+    // clear old data
+    // dataMap = getDefaultDataMap(transactions);
+    //
+    // transactions.forEach((element) {
+    //   prepareDataMap(element);
+    // });
+
+    notifyListeners();
+  }
+
   monthClicked(String clickedMonth) async {
     selectedMonthIndex = months.indexOf(clickedMonth);
 
@@ -49,9 +97,6 @@ class HomeModel extends BaseModel {
 
     expenseSum = await _firebaseDatabaseService.getExpenseSum(user);
     incomeSum = await _firebaseDatabaseService.getIncomeSum(user);
-
-    // expenseSum = await _dataBaseService.getExpenseSum(appBarTitle);
-    // incomeSum = await _dataBaseService.getIncomeSum(appBarTitle);
 
     titleClicked();
   }
@@ -76,8 +121,9 @@ class HomeModel extends BaseModel {
     }
   }
 
-  init() async {
-    selectedMonthIndex = DateTime.now().month - 1;
+  init(bool firstTime) async {
+    if (firstTime) selectedMonthIndex = DateTime.now().month - 1;
+    // selectedMonthIndex = DateTime.now().month - 1;
     appBarTitle = months[DateTime.now().month - 1];
 
     expenseSum = await _firebaseDatabaseService.getExpenseSum(user);

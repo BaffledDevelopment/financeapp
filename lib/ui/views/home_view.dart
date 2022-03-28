@@ -1,3 +1,4 @@
+import 'package:chips_choice_null_safety/chips_choice_null_safety.dart';
 import 'package:finances/services/firebase_database_service.dart';
 import 'package:finances/ui/widgets/application_drawer.dart';
 import 'package:finances/ui/widgets/home_view_widgets/app_bar.dart';
@@ -27,7 +28,7 @@ class HomeView extends StatelessWidget {
 
     return BaseView<HomeModel>(
 
-      onModelReady: (model) async => await model.init(),
+      onModelReady: (model) async => await model.init(true),
       builder: (context, model, child) => Scaffold(
         appBar: buildAppBar(model!.appBarTitle, model),
         drawer: AppDrawer(context!),
@@ -39,12 +40,36 @@ class HomeView extends StatelessWidget {
                 children: <Widget>[
                   Column(
                     children: <Widget>[
-                      Text(user.email!),
-                      Text(user.uid),
-                      RoundedButton(
-                          text: "Press me",
-                          press: () => fdb_service.saveDatabaseToCSVFile(user),
+                      ChipsChoice<int>.single(
+                        choiceStyle: C2ChoiceStyle(elevation: 1, color: Colors.red),
+                        value: model.selectedMonthIndex,
+                        wrapped: true,
+                        choiceItems: C2Choice.listFrom<int, String>(
+                          source: model.months,
+                          value: (i, v) => i,
+                          label: (i, v) => v,
+                        ),
+                        onChanged: (val) => model.changeSelectedMonth(val),
                       ),
+                      ChipsChoice<int>.single(
+                        choiceStyle:
+                        C2ChoiceStyle(elevation: 1, color: Colors.green),
+                        value: model.type == 'income' ? 0 : 1,
+                        wrapped: true,
+                        choiceItems: C2Choice.listFrom<int, String>(
+                          source: model.types,
+                          value: (i, v) => i,
+                          label: (i, v) => v,
+                        ),
+                        onChanged: (val) => model.changeType(val),
+                      ),
+
+                      // Text(user.email!),
+                      // Text(user.uid),
+                      // RoundedButton(
+                      //     text: "Press me",
+                      //     press: () => fdb_service.saveDatabaseToCSVFile(user),
+                      // ),
 
                       SummaryWidget(
                           income: model.incomeSum, expense: model.expenseSum),
@@ -79,8 +104,6 @@ class HomeView extends StatelessWidget {
 
     print("INFO ABOUT TRANSACTIONINFO ABOUT TRANSACTIONINFO ABOUT TRANSACTIONINFO ABOUT TRANSACTIONINFO ABOUT TRANSACTIONINFO ABOUT TRANSACTIONINFO ABOUT TRANSACTIONINFO ABOUT TRANSACTION");
     print(transactions);
-    print(transactions?.toList());
-    print(transactions?.toList());
     print(transactions?.toList());
     print(transactions.toString());
 
